@@ -2,7 +2,9 @@ package sample;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Handles requests for the application home page.
@@ -28,6 +31,7 @@ public class SampleController {
 	private SampleService svc;
 	
 	/**
+	 * 기본 경로 테스트
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -43,7 +47,15 @@ public class SampleController {
 		
 		return "sample";
 	}
-	@RequestMapping(value = "/sample", method = RequestMethod.GET)
+	
+	/**
+	 * mvc 테스트
+	 * @param locale
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/sampleController", method = RequestMethod.GET)
+	@ResponseBody
 	public String sampleController(Locale locale, Model model) {
 		
 		logger.info("sampleController");		
@@ -51,5 +63,47 @@ public class SampleController {
 		return svc.sampleService(locale,model);
 	}
 	
+	/**
+	 * ResponseBody 테스트
+	 * @param locale
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/sampleResponseBody", method = RequestMethod.GET)
+	@ResponseBody
+	public String sampleResponseBody(Locale locale, Model model) {
+		
+		logger.info("sampleResponseBody");		
+		
+		return "sampleResponseBody";
+	}
 	
+	/**
+	 * ResponseBody 테스트
+	 * @param locale
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/sampleResponseBodyList", method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> sampleResponseBodyList(Locale locale, Model model) {
+		
+		logger.info("sampleResponseBodyList");		
+		
+		return svc.sampleList(locale,model);
+	}
+	
+	/**
+	 * @param locale
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/sampleResponseBodyMap", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, String> sampleResponseBodyMap(Locale locale, Model model) {
+		
+		logger.info("sampleResponseBodyMap");		
+		
+		return svc.sampleMap(locale,model);
+	}
 }

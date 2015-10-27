@@ -22,10 +22,56 @@
 
 	<script type="text/javascript">
 		$(function() {
-			$("#jquerytest").html("jquerytest")
+			//	쿼리 작동 테스트용
+			$("#jquery_result").html("jquery test")
+			//	아작스 테스트용
+			$("#jquery_menu a").click(
+					function() {
+						var url = $(this).attr("href")
+						$.ajax({
+							method : "GET",
+							url : url,
+							success : function(values) {
+								$("#jquery_result").html(values + "<br>")
+
+								//	배열 받기
+								$.each(values, function(index, value) {
+									$("#jquery_result")
+											.append(
+													index + " : " + value.name
+															+ "<br>")
+								})
+							}
+						})
+						//	링크 기능 해제
+						return false
+					})
 		})
 	</script>
-	<p id="jquerytest"></p>
+
+	<h1>link menu</h1>
+
+	<div id="menu">
+		<ol>
+			<li><a href="/defult/sample/">sample home</a></li>
+			<li><a href="sampleController">sampleController</a></li>
+			<li><a href="sampleResponseBody">sampleResponseBody</a></li>
+			<li><a href="sampleResponseBodyList">sampleResponseBodyList</a></li>
+			<li><a href="sampleResponseBodyMap">sampleResponseBodyMap</a></li>
+		</ol>
+	</div>
+
+	<h1>jquery_menu</h1>
+
+	<div id="jquery_menu">
+		<ol>
+			<li><a href="sampleResponseBody">sampleResponseBody</a></li>
+			<li><a href="sampleResponseBodyList">sampleResponseBodyList</a></li>
+			<li><a href="sampleResponseBodyMap">sampleResponseBodyMap</a></li>
+		</ol>
+	</div>
+	<!-- 결과 출력용 -->
+	<p id="jquery_result"></p>
 
 	<%@ include file="/debug/debug.jsp"%>
 </body>

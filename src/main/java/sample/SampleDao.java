@@ -24,7 +24,7 @@ public class SampleDao {
 		// TODO Auto-generated method stub
 		log.debug("sampleDAO");
 		
-		return "sample";
+		return "sample MVC test";
 	}
 
 }
