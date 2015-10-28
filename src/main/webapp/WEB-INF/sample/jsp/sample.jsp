@@ -21,9 +21,12 @@
 	<P>The time on the server is ${serverTime}.</P>
 
 	<script type="text/javascript">
+	
 		$(function() {
+			
 			//	쿼리 작동 테스트용
 			$("#jquery_result").html("jquery test")
+			
 			//	아작스 테스트용
 			$("#jquery_menu a").click(
 					function() {
@@ -32,13 +35,14 @@
 							method : "GET",
 							url : url,
 							success : function(values) {
+								
 								$("#jquery_result").html(values + "<br>")
 
 								//	배열 받기
 								$.each(values, function(index, value) {
 									$("#jquery_result")
 											.append(
-													index + " : " + value.name
+													index + " : " + value
 															+ "<br>")
 								})
 							}

@@ -35,6 +35,7 @@ public class SampleController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
+	//@ResponseBody
 	public String sample(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
