@@ -23,6 +23,10 @@ body {
 	border: 1px solid #BBB;
 	background-color: #FFF;
 }
+
+.text {
+	word-break: break-all;
+}
 </style>
 </head>
 <body>
@@ -54,8 +58,8 @@ body {
 						<!-- <img class="half-bottom-space" src="http://lorempixel.com/400/200/sports/1"> -->
 						<div class="description">
 							<!--  <h4 class="no-margin">Highlight Title</h4> -->
-							<h5 class="slab">${row.b_nick  }/${row.b_date  }</h5>
-							<p>${row.b_text  }</p>
+							<h5 class="slab">${row.b_no }/${row.b_nick  }/${row.b_date  }</h5>
+							<p class="text">${row.b_text  }</p>
 						</div>
 					</li>
 				</c:forEach>
@@ -71,20 +75,122 @@ body {
 
 	</div>
 
-	
-		<script>
-			Ink.requireModules([ 'Ink.UI.Carousel_1' ], function(InkCarousel) {
-				new InkCarousel('#car1', {
-					pagination : '.p1'
-				});
+	<script>
+		Ink.requireModules([ 'Ink.UI.Carousel_1' ], function(InkCarousel) {
+			new InkCarousel('#car1', {
+				pagination : '.p1'
 			});
-		</script>
+		});
+	</script>
 
+	<div class="panel">
+		<c:forEach items="${BoardList}" var="row">
+			<div id="row${row.b_no  }" class="row" value="${row.b_no  }">
+				<div class="all-10">${row.b_no  }</div>
+				<div class="all-20">${row.b_nick  }</div>
+				<div class="all-50">
+					<a href="boardEdit" class="edit" value="${row.b_no  }">수정하기</a> <a
+						href="boardEdit" class="editok hide-all" value="${row.b_no  }">수정전송</a>
+					<a href="boardDelete" class="delete" value="${row.b_no  }">삭제하기</a>
+					<a href="boardDelete" class="deleteok hide-all"
+						value="${row.b_no  }">삭제전송</a> <a href="boardDelete"
+						class="no hide-all" value="${row.b_no  }">취소</a> <input
+						type="password" class="pw hide-all" />
+				</div>
+				<div class="all-20 align-right">${row.b_date  }</div>
+				<div class="all-100 text">${row.b_text  }</div>
+			</div>
+		</c:forEach>
+	</div>
 
+	<script type="text/javascript">
+		function a(dv) {
+			var url = dv.attr("href")
+			var b_no = dv.attr("value")
+			// 			$("").p
+			alert("url:" + url + ",b_no:" + b_no)
+			return false
+		}
 
-		<table class="ink-table bordered hover ink-grid panel">
+		$(function() {
+			$(".edit").click(
+					function() {
+						var txt = $(this).parent().siblings(".text")
+						var b_text = txt.html()
+						// 				alert(b_text)
+						txt.addClass("hide-all")
+						$(this).parents(".row").append(
+								"<textarea name='b_text' id='' class='all-100 text' >"
+										+ b_text + "</textarea>")
+
+						$(this).addClass("hide-all")
+						$(this).siblings(".editok").removeClass("hide-all")
+						$(this).siblings(".delete").addClass("hide-all")
+						$(this).siblings(".deleteok").removeClass("hide-all")
+						$(this).siblings(".no").removeClass("hide-all")
+						$(this).siblings(".pw").removeClass("hide-all")
+						return false
+					})
+			$(".editok").click(function() {
+				$(this).siblings(".edit").removeClass("hide-all")
+				$(this).addClass("hide-all")
+				$(this).siblings(".delete").removeClass("hide-all")
+				$(this).siblings(".deleteok").addClass("hide-all")
+				$(this).siblings(".no").addClass("hide-all")
+				$(this).siblings(".pw").addClass("hide-all")
+				var txt=$(this).parent().siblings("textarea").val()
+				$(this).parent().siblings(".text").html(txt)
+				$(this).parent().siblings(".text").removeClass("hide-all")
+				$(this).parent().siblings("textarea").remove()
+				// 				a($(this))
+				return false
+			})
+			$(".delete").click(function() {
+				$(this).siblings(".edit").removeClass("hide-all")
+				$(this).siblings(".editok").addClass("hide-all")
+				$(this).addClass("hide-all")
+				$(this).siblings(".deleteok").removeClass("hide-all")
+				$(this).siblings(".no").removeClass("hide-all")
+				$(this).siblings(".pw").removeClass("hide-all")
+				$(this).parent().siblings("textarea").remove()
+				// 				a($(this))
+				return false
+			})
+			$(".deleteok").click(function() {
+				$(this).parents(".row").remove()
+				// 				a($(this))
+				return false
+			})
+			$(".no").click(function() {
+				$(this).siblings(".edit").removeClass("hide-all")
+				$(this).siblings(".editok").addClass("hide-all")
+				$(this).siblings(".delete").removeClass("hide-all")
+				$(this).siblings(".deleteok").addClass("hide-all")
+				$(this).addClass("hide-all")
+				$(this).siblings(".pw").addClass("hide-all")
+				$(this).parent().siblings("textarea").remove()
+				$(this).parent().siblings(".text").removeClass("hide-all")
+				// 				a($(this))
+				return false
+			})
+			/* 			$(".edit").click(function() {
+			 var url = $(this).attr("href")
+			 var no = $(this).parent(".row").attr("value")
+			 alert("url:" + url + ",no:" + no)
+			 return false
+			 })
+			 $(".delete").click(function() {
+			 var url = $(this).attr("href")
+			 var no = $(this).parent(".row").attr("value")
+			 alert("url:" + url + ",no:" + no)
+			 return false
+			 }) */
+		})
+	</script>
+
+	<%-- <table class="ink-table bordered hover panel">
 			<thead>
-				<tr class="column-group half-gutters">
+				<tr class="half-gutters">
 					<th class="all-10">NICK/NO/DATE</th>
 					<!-- <th class="all-10"></th> -->
 					<th class="all-90">TEXT</th>
@@ -93,17 +199,17 @@ body {
 			</thead>
 			<tbody>
 				<c:forEach items="${BoardList}" var="row">
-					<tr class="column-group half-gutters">
-						<td class="all-10">${row.b_nick  }<br>${row.b_no    }<br>${row.b_date  }</td>
-						<%-- <td class="all-10">${row.b_pw    }</td> --%>
-						<td class="all-90">${row.b_text  }</td>
-						<%-- <td class="all-10">${row.b_date  }</td> --%>
+					<tr class="half-gutters">
+						<td class="all-100">${row.b_nick  }<br>${row.b_no    }<br>${row.b_date  }</td>
+						<td class="all-10">${row.b_pw    }</td>
+						<td class="all-100">${row.b_text  }</td>
+						<td class="all-10">${row.b_date  }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
-		</table>
+		</table> --%>
 
-	
+
 	<%@ include file="/debug/debug.jsp"%>
 </body>
 </html>

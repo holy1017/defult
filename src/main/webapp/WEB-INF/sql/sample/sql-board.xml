@@ -24,6 +24,7 @@
 		b_text,
 		b_date
 		from SAMPLE_BOARD
+		ORDER BY B_NO DESC
 	</select>
 	<insert
 		id="testboardInsert"
