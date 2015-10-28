@@ -1,4 +1,4 @@
-package common;
+package common.logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
