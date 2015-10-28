@@ -33,4 +33,11 @@ public class BoardDao {
 		return list;
 	}
 
+	public int BoardInsert(BoardVO vo) {
+		// TODO Auto-generated method stub
+		int result=sql.insert("board.testboardInsert",vo);
+		
+		return result;
+	}
+
 }

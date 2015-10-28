@@ -30,9 +30,9 @@
 		parameterType="sample.board.BoardVO">
 		insert into sample_board (b_nick, b_pw, b_text)
 		values (
-		DBMS_RANDOM.STRING('P', ROUND(DBMS_RANDOM.VALUE(1, 20),0)) ,
+		DBMS_RANDOM.STRING('X', ROUND(DBMS_RANDOM.VALUE(1, 20),0)) ,
 		DBMS_RANDOM.STRING('P', ROUND(DBMS_RANDOM.VALUE(1, 64),0)) ,
-		DBMS_RANDOM.STRING('P', ROUND(DBMS_RANDOM.VALUE(1, 4000),0)))
+		DBMS_RANDOM.STRING('X', ROUND(DBMS_RANDOM.VALUE(1, 4000),0)))
 	</insert>
 	<insert
 		id="boardInsert"

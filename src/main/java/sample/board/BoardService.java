@@ -33,4 +33,11 @@ public class BoardService {
 		return list;
 	}
 
+	public int BoardInsert(BoardVO vo) {
+		// TODO Auto-generated method stub
+		int result=dao.BoardInsert(vo);
+		
+		return result;
+	}
+
 }
