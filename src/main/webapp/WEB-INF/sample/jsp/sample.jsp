@@ -38,7 +38,7 @@
 								$.each(values, function(index, value) {
 									$("#jquery_result")
 											.append(
-													index + " : " + value.name
+													index + " : " + value
 															+ "<br>")
 								})
 							}
