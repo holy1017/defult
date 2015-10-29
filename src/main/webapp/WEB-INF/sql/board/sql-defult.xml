@@ -20,7 +20,6 @@
 		u_indate
 		from defult_user
 		<where>
-
 			<if test="u_delete==0">
 				or u_delete=0
 			</if>
@@ -30,10 +29,8 @@
 			<if test="u_nick!=null and u_nick!=''">
 				or u_nick like '%'||#{u_nick}||'%'
 			</if>
-
-			order
-			by u_no desc
-			</where>
+		</where>
+		order by u_no desc
 	</select>
 	<select
 		id="boardList"

@@ -24,7 +24,7 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	private  final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	//@Autowired
+	@Autowired
 	// @Autowired(required=false)//필수가 아닌경우 빈으로 등록 안하게 설정
 	// @Qualifier("CommonService1")//는 타입으로(by type) ?아줌. 똑같은 클래스가 있을경우
 	// CommonService1 라는 구분값으로 ?음
@@ -48,6 +48,12 @@ public class BoardController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "main";
+	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String  list(Model model) {
+		
+		return "list";
 	}
 	
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+	pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,6 +7,11 @@
 <title>메인 페이지</title>
 </head>
 <body>
-<%@ include file="/debug/debug.jsp" %>
+	<ul>
+		<li><a href="list">글목록</a></li>
+		<li><a href="white">글쓰기</a></li>
+	</ul>
+
+	<%@ include file="/debug/debug.jsp"%>
 </body>
 </html>
