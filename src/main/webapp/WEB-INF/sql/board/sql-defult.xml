@@ -27,19 +27,20 @@
 
 		select
 		NVL(count(1),0) <!-- value가 null 일경우 0을 반환, 아닐경우1 -->
-		from defult_board
+		from defult_user
+		inner join defult_board on (defult_user.u_no = defult_board.u_no)
 		<where>
 			<if test="b_delete==0">
-				or b_delete=0
+				b_delete=0
+			</if>
+			<if test="u_id!=null and u_id!=''">
+				or u_id like '%'||#{u_id}||'%'
+			</if>
+			<if test="u_nick!=null and u_nick!=''">
+				or u_nick like '%'||#{u_nick}||'%'
 			</if>
 			<if test="b_title!=null and b_title!=''">
 				or b_title like '%'||#{keyword}||'%'
-			</if>
-			<if test="u_nick!=null and u_nick!=''">
-				or u_nick like '%'||#{keyword}||'%'
-			</if>
-			<if test="u_id!=null and u_id!=''">
-				or u_id like '%'||#{keyword}||'%'
 			</if>
 			<if test="b_content!=null and b_content!=''">
 				or b_content like '%'||#{keyword}||'%'
