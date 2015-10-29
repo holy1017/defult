@@ -8,6 +8,45 @@
 		where (textname like '%my%' and textname like '%java%' and textname like
 		'%spring%')
 		or (textname like '%my java spring%'); -->
+	<!-- 전체 글의 갯수 구하기 -->
+		<!-- select u_id,
+		u_nick,
+		b_no,
+		b_title,
+		defult_board.u_no,
+		b_eddate
+		from defult_user
+		inner join defult_board on (defult_user.u_no = defult_board.u_no)
+		order by b_no desc -->
+	<select
+		id="boardListCount"
+		resultType="int"
+		parameterType="hashmap">
+	
+
+
+		select
+		NVL(count(1),0) <!-- value가 null 일경우 0을 반환, 아닐경우1 -->
+		from defult_board
+		<where>
+			<if test="b_delete==0">
+				or b_delete=0
+			</if>
+			<if test="b_title!=null and b_title!=''">
+				or b_title like '%'||#{keyword}||'%'
+			</if>
+			<if test="u_nick!=null and u_nick!=''">
+				or u_nick like '%'||#{keyword}||'%'
+			</if>
+			<if test="u_id!=null and u_id!=''">
+				or u_id like '%'||#{keyword}||'%'
+			</if>
+			<if test="b_content!=null and b_content!=''">
+				or b_content like '%'||#{keyword}||'%'
+			</if>
+		</where>
+	</select>
+
 	<select
 		id="userList"
 		parameterType="UserVO"

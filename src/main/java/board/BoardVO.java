@@ -11,6 +11,8 @@ public class BoardVO {
 	private String b_indate;
 	private String b_eddate;
 	private int u_no;
+	private String u_id;
+	private String u_nick;
 	private int b_delete;
 
 	public int getB_no() {
@@ -67,5 +69,21 @@ public class BoardVO {
 
 	public void setB_delete(int b_delete) {
 		this.b_delete = b_delete;
+	}
+
+	public String getU_id() {
+		return u_id;
+	}
+
+	public void setU_id(String u_id) {
+		this.u_id = u_id;
+	}
+
+	public String getU_nick() {
+		return u_nick;
+	}
+
+	public void setU_nick(String u_nick) {
+		this.u_nick = u_nick;
 	}
 }

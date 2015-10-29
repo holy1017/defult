@@ -1,5 +1,6 @@
 package board;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -26,8 +27,8 @@ public class BoardDao {
 		return list;
 	}
 
-	public List<BoardVO> boardList(BoardVO vo) {
-		List<BoardVO> list = sql.selectList("defult.boardList", vo);
+	public List<BoardVO> boardList(HashMap<String, String> map) {
+		List<BoardVO> list = sql.selectList("defult.boardList", map);
 		return list;
 	}
 
@@ -64,5 +65,13 @@ public class BoardDao {
 	public int replyUpdate(ReplyVO vo) {
 		int result = sql.update("defult.replyUpdate", vo);
 		return result;
+	}
+
+	public int boardListCount(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		log.debug("boardListCount");
+		
+		int count=sql.selectOne("defult.boardListCount", map);
+		return count;
 	}
 }
