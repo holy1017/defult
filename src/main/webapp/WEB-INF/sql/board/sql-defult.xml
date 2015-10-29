@@ -33,6 +33,7 @@
 
 			order
 			by u_no desc
+			</where>
 	</select>
 	<select
 		id="boardList"

@@ -54,6 +54,7 @@
 				<value>/WEB-INF/sql/**/sql-*.xml</value>
 			</list>
 		</property>
+		<property name="configLocation" value="/WEB-INF/mybatis/mybatis-config.xml" />
 	</bean>
 
 	<bean
