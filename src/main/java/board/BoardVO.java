@@ -8,6 +8,7 @@ public class BoardVO {
 	private String b_indate;
 	private String b_eddate;
 	private int u_no;
+	private int b_delete;
 
 	public int getB_no() {
 		return b_no;
@@ -55,5 +56,13 @@ public class BoardVO {
 
 	public void setU_no(int u_no) {
 		this.u_no = u_no;
+	}
+
+	public int getB_delete() {
+		return b_delete;
+	}
+
+	public void setB_delete(int b_delete) {
+		this.b_delete = b_delete;
 	}
 }

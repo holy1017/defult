@@ -7,6 +7,7 @@ public class UserVO {
 	private String u_pw;
 	private String u_nick;
 	private String u_indate;
+	private int u_delete;
 
 	public int getU_no() {
 		return u_no;
@@ -46,5 +47,13 @@ public class UserVO {
 
 	public void setU_indate(String u_indate) {
 		this.u_indate = u_indate;
+	}
+
+	public int getU_delete() {
+		return u_delete;
+	}
+
+	public void setU_delete(int u_delete) {
+		this.u_delete = u_delete;
 	}
 }

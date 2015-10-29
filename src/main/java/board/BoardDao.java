@@ -1,5 +1,7 @@
 package board;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,4 +18,18 @@ public class BoardDao {
 	// 있을경우CommonService1 라는 구분값으로 찿음
 	// @Resource(name="testDao") //는 이름으로(by name) 찿아줌
 	private SqlSessionTemplate sql;
+
+	public List<UserVO> userList(UserVO vo) {
+		List<UserVO> list = sql.selectList("userList", vo);
+		return list;
+	}
+	public List<BoardVO> boardList(BoardVO vo) {
+		List<BoardVO> list = sql.selectList("boardList", vo);
+		return list;
+	}
+	public List<ReplyVO> replyList(ReplyVO vo) {
+		List<ReplyVO> list = sql.selectList("replyList", vo);
+		return list;
+	}
+
 }

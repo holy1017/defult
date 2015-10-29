@@ -8,6 +8,7 @@ public class ReplyVO {
 	private int u_no;
 	private String r_indate;
 	private String r_eddate;
+	private int r_delete;
 
 	public int getR_no() {
 		return r_no;
@@ -55,6 +56,14 @@ public class ReplyVO {
 
 	public void setR_eddate(String r_eddate) {
 		this.r_eddate = r_eddate;
+	}
+
+	public int getR_delete() {
+		return r_delete;
+	}
+
+	public void setR_delete(int r_delete) {
+		this.r_delete = r_delete;
 	}
 
 }

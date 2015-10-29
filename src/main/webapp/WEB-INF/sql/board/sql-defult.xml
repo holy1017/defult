@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="defult">
+
+	<select
+		id="userList"
+		parameterType="board.UserVO"
+		resultType="board.UserVO">
+		select u_no,
+		u_id,
+		u_pw,
+		u_nick,
+		u_indate
+		from defult_user
+		order
+		by u_no desc
+	</select>
+	<select
+		id="boardList"
+		parameterType="board.BoardVO"
+		resultType="board.BoardVO">
+		select b_no,
+		b_title,
+		b_content,
+		b_indate,
+		b_eddate,
+		u_no
+		from
+		defult_board
+		order by b_no desc
+	</select>
+	<select
+		id="replyList"
+		parameterType="board.ReplyVO"
+		resultType="board.ReplyVO">
+		select r_no,
+		r_content,
+		u_no,
+		b_no,
+		r_indate,
+		r_eddate
+		from
+		defult_reply
+		order by r_no desc
+	</select>
+	<insert
+		id="userInsert"
+		parameterType="board.UserVO">
+		
+		</insert>
+	<insert
+		id="boardInsert"
+		parameterType="board.BoardVO">
+		
+		</insert>
+	<insert
+		id="replyInsert"
+		parameterType="board.ReplyVO">
+		
+		</insert>
+
+	<!-- <select
+		id="testboardSelect"
+		parameterType="sample.board.BoardVO"
+		resultType="sample.board.BoardVO">
+		SELECT
+		ROUND(DBMS_RANDOM.VALUE(1, 999),0) B_NO,
+		DBMS_RANDOM.STRING('P', 20) B_NICK,
+		DBMS_RANDOM.STRING('P', 64) B_PW,
+		DBMS_RANDOM.STRING('P', 4000) B_TEXT,
+		SYSDATE B_DATE
+		FROM dual
+		</select> -->
+	<!-- <select
+		id="boardList"
+		parameterType="sample.board.BoardVO"
+		resultType="sample.board.BoardVO">
+		select
+		b_no,
+		b_nick,
+		b_pw,
+		b_text,
+		b_date
+		from SAMPLE_BOARD
+		ORDER
+		BY B_NO DESC
+		</select> -->
+	<!-- <insert
+		id="testboardInsert"
+		parameterType="sample.board.BoardVO">
+		insert into sample_board (b_nick, b_pw, b_text)
+		values (
+		DBMS_RANDOM.STRING('X', ROUND(DBMS_RANDOM.VALUE(1, 20),0)) ,
+		DBMS_RANDOM.STRING('P', ROUND(DBMS_RANDOM.VALUE(1, 64),0)) ,
+		DBMS_RANDOM.STRING('X', ROUND(DBMS_RANDOM.VALUE(1, 4000),0)))
+		</insert> -->
+	<!-- <insert
+		id="boardInsert"
+		parameterType="sample.board.BoardVO">
+		insert into sample_board (b_nick, b_pw, b_text)
+		values (
+		#{b_nick} ,
+		#{b_pw } ,
+		#{b_text })
+		</insert> -->
+	<!--
+		<select id="getDeptList2" parameterType="com.vo.DeptVO"
+		resultType="HashMap">
+		SELECT deptno, dname, loc FROM dept
+		</select>
+		<insert id="deptInsert" parameterType="com.vo.DeptVO">
+		INSERT INTO dept VALUES(#{deptno},#{dname},#{loc})
+		</insert>
+		<update id="deptUpdate" parameterType="com.vo.DeptVO"> UPDATE dept SET
+		dname=#{dname}, loc=#{loc}
+		where deptno = #{deptno}
+		</update>
+		<delete id="deptDelete" parameterType="com.vo.DeptVO">
+		DELETE FROM dept WHERE deptno=#{deptno}
+		</delete>
+	-->
+</mapper>
