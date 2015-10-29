@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SampleController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SampleController.class);
+	private  final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	// @Autowired(required=false)//필수가 아닌경우 빈으로 등록 안하게 설정

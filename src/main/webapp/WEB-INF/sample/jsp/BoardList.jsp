@@ -120,7 +120,7 @@ body {
 						// 				alert(b_text)
 						txt.addClass("hide-all")
 						$(this).parents(".row").append(
-								"<textarea name='b_text' id='' class='all-100 text' >"
+								"<textarea name='b_text' id='' class='all-100 text' rows='5'>"
 										+ b_text + "</textarea>")
 
 						$(this).addClass("hide-all")
@@ -208,7 +208,6 @@ body {
 				</c:forEach>
 			</tbody>
 		</table> --%>
-
 
 	<%@ include file="/debug/debug.jsp"%>
 </body>

@@ -59,6 +59,10 @@
 		<level value="debug" />
 		<appender-ref ref="console"/>
 	</logger>
+	<logger name="board2" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="console"/>
+	</logger>
 	
 	<!-- Query Loggers -->
 	<logger name="jdbc.sqlonly" additivity="false">
