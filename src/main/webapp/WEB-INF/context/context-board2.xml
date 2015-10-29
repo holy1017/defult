@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		id="boardDAO"
+		class="board2.BoardDAOImple">
+		<property name="dataSource">
+			<!-- 여기 있었네; -->
+			<!-- <ref bean="dataSource" /> -->
+			<ref bean="defultSource" />
+		</property>
+	</bean>
+
+	<bean
+		id="boardService"
+		class="board2.BoardServiceImple">
+		<property name="boardDAO">
+			<ref bean="boardDAO" />
+		</property>
+	</bean>
+
+	<bean
+		id="pageHandler"
+		class="board2.PageHandler">
+		<property name="boardDAO">
+			<ref bean="boardDAO" />
+		</property>
+	</bean>
+
+</beans>
