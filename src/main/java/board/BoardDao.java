@@ -20,16 +20,47 @@ public class BoardDao {
 	private SqlSessionTemplate sql;
 
 	public List<UserVO> userList(UserVO vo) {
-		List<UserVO> list = sql.selectList("userList", vo);
-		return list;
-	}
-	public List<BoardVO> boardList(BoardVO vo) {
-		List<BoardVO> list = sql.selectList("boardList", vo);
-		return list;
-	}
-	public List<ReplyVO> replyList(ReplyVO vo) {
-		List<ReplyVO> list = sql.selectList("replyList", vo);
+		List<UserVO> list = sql.selectList("defult.userList", vo);
 		return list;
 	}
 
+	public List<BoardVO> boardList(BoardVO vo) {
+		List<BoardVO> list = sql.selectList("defult.boardList", vo);
+		return list;
+	}
+
+	public List<ReplyVO> replyList(ReplyVO vo) {
+		List<ReplyVO> list = sql.selectList("defult.replyList", vo);
+		return list;
+	}
+
+	public int userInsert(UserVO vo) {
+		int result = sql.insert("defult.userInsert", vo);
+		return result;
+	}
+
+	public int boardInsert(BoardVO vo) {
+		int result = sql.insert("defult.boardInsert", vo);
+		return result;
+	}
+
+	public int replyInsert(ReplyVO vo) {
+		int result = sql.insert("defult.replyInsert", vo);
+		return result;
+	}
+
+	public int userUpdate(UserVO vo) {
+		int result = sql.update("defult.userUpdate", vo);
+		return result;
+	}
+
+	public int boardUpdate(BoardVO vo) {
+		int result = sql.update("defult.boardUpdate", vo);
+		return result;
+	}
+
+	public int replyUpdate(ReplyVO vo) {
+		int result = sql.update("defult.replyUpdate", vo);
+		return result;
+	}
 }

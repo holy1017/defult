@@ -1,5 +1,8 @@
 package board;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("ReplyVO")
 public class ReplyVO {
 
 	private int r_no;

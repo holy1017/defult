@@ -1,5 +1,8 @@
 package board;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("UserVO")
 public class UserVO {
 	
 	private int u_no;

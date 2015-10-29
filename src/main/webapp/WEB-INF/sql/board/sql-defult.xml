@@ -2,23 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="defult">
 
+	<!-- <typeAlias type="com.someapp.model.User" alias="User"/> -->
+
+	<!-- select * from testsample
+		where (textname like '%my%' and textname like '%java%' and textname like
+		'%spring%')
+		or (textname like '%my java spring%'); -->
 	<select
 		id="userList"
-		parameterType="board.UserVO"
-		resultType="board.UserVO">
-		select u_no,
+		parameterType="UserVO"
+		resultType="UserVO">
+		select
+		u_no,
 		u_id,
 		u_pw,
 		u_nick,
 		u_indate
 		from defult_user
-		order
-		by u_no desc
+		<where>
+
+			<if test="u_delete==0">
+				or u_delete=0
+			</if>
+			<if test="u_id!=null and u_id!=''">
+				or u_id like '%'||#{u_id}||'%'
+			</if>
+			<if test="u_nick!=null and u_nick!=''">
+				or u_nick like '%'||#{u_nick}||'%'
+			</if>
+
+			order
+			by u_no desc
 	</select>
 	<select
 		id="boardList"
-		parameterType="board.BoardVO"
-		resultType="board.BoardVO">
+		parameterType="BoardVO"
+		resultType="BoardVO">
 		select b_no,
 		b_title,
 		b_content,
@@ -27,12 +46,26 @@
 		u_no
 		from
 		defult_board
+		<where>
+			<if test="b_delete==0">
+				or b_delete=0
+			</if>
+			<if test="u_no!=null and u_no!=''">
+				u_no like '%'||#{u_no}||'%'
+			</if>
+			<if test="b_title!=null and b_title!=''">
+				or b_title like '%'||#{b_title}||'%'
+			</if>
+			<if test="b_content!=null and b_content!=''">
+				or b_content like '%'||#{b_content}||'%'
+			</if>
+		</where>
 		order by b_no desc
 	</select>
 	<select
 		id="replyList"
-		parameterType="board.ReplyVO"
-		resultType="board.ReplyVO">
+		parameterType="ReplyVO"
+		resultType="ReplyVO">
 		select r_no,
 		r_content,
 		u_no,
@@ -41,24 +74,125 @@
 		r_eddate
 		from
 		defult_reply
+		<where>
+			<if test="r_delete==0">
+				or r_delete=0
+			</if>
+		</where>
 		order by r_no desc
 	</select>
+
 	<insert
 		id="userInsert"
-		parameterType="board.UserVO">
-		
-		</insert>
+		parameterType="UserVO">
+		insert into
+		defult_user (
+		u_id
+		, u_pw
+		, u_nick
+		) values (
+		#{u_id }
+		, #{u_pw }
+		, #{u_nick}
+		)
+	</insert>
 	<insert
 		id="boardInsert"
-		parameterType="board.BoardVO">
-		
-		</insert>
+		parameterType="BoardVO">
+		insert into
+		defult_board (
+		b_title
+		, b_content
+		, u_no
+		)values (
+		#{b_title }
+		, #{b_content }
+		, #{u_no }
+		)
+	</insert>
 	<insert
 		id="replyInsert"
-		parameterType="board.ReplyVO">
-		
-		</insert>
+		parameterType="ReplyVO">
+		insert into
+		defult_reply (
+		r_content
+		, b_no
+		, u_no) values (
+		#{r_content}
+		, #{b_no }
+		, #{u_no }
+		)
+	</insert>
 
+	<update
+		id="userUpdate"
+		parameterType="UserVO">
+		update defult_user
+		set
+		u_pw = #{u_pw}
+		, u_nick = #{u_nick}
+		, u_delete = #{u_delete}
+		where u_no =
+		#{u_no }
+		and u_id = #{u_id }
+		and
+		u_pw = #{u_pw }
+		and u_nick = #{u_nick }
+		and u_delete =0
+	</update>
+	<update
+		id="boardUpdate"
+		parameterType="BoardVO">
+		update defult_board
+		set
+		b_title = #{b_title },
+		b_content =
+		#{b_content} ,
+		b_eddate = #{b_eddate },
+		b_delete = #{b_delete }
+		where
+		b_no = #{b_no }
+		and u_no = #{u_no }
+		and b_delete =0
+	</update>
+	<update
+		id="replyUpdate"
+		parameterType="ReplyVO">
+		update defult_reply
+		set
+		r_content = #{r_content}
+		,r_delete= #{r_delete}
+		,r_eddate = sysdate
+		where r_no = #{r_no }
+		and b_no
+		= #{b_no}
+		and u_no = #{u_no }
+		and r_delete =0
+	</update>
+	<!-- <select id="select" parameterType="hashmap" resultMap="bbsMap">
+		SELECT * FROM bbs
+		<where>
+		SQL Injection
+
+		<if test="sch_type != null and sch_value != null">
+		AND ${sch_type} LIKE '%${sch_value}%'
+		</if>
+
+
+		<choose>
+		<when test="sch_type == 'subject'">
+		AND subject like CONCAT('%', #{sch_value} , '%')
+		</when>
+		<when test="sch_type == 'content'">
+		AND content like CONCAT('%', #{sch_value} , '%')
+		</when>
+		<when test="sch_type == 'user_name'">
+		AND user_name like CONCAT('%', #{sch_value} , '%')
+		</when>
+		</choose>
+
+		</where>
+		</select> -->
 	<!-- <select
 		id="testboardSelect"
 		parameterType="sample.board.BoardVO"
