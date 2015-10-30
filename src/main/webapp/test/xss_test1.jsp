@@ -16,7 +16,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-크롬은 안뜸. 익플에선 뜸.
-${result}
+	크롬은 안뜸. 익플에선 뜸.
+	<br>${result}<br> The XSS Auditor refused to execute a script
+	in 'http://localhost:8080/defult/test/xss_test1.jsp' because its source
+	code was found within the request. The auditor was enabled as the
+	server sent neither an 'X-XSS-Protection' nor 'Content-Security-Policy'
+	header.
+	<br> 취약점 제거
+	<br> ${fn:escapeXml(result)}
+	<br>
+	<c:out value="${result }"></c:out>
+	<br>
 </body>
 </html>
