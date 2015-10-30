@@ -30,8 +30,8 @@ public class BoardDao {
 
 	public List<BoardVO> boardList(Map<String, String> map) {
 		log.debug("boardList");
-//		List<BoardVO> list = sql.selectList("defult.boardList", map);
-		List<BoardVO> list = sql.selectList("defult.getboardList", map);
+		// List<BoardVO> list = sql.selectList("defult.boardList", map);
+		List<BoardVO> list = sql.selectList("defult.boardList", map);
 		return list;
 	}
 
@@ -70,11 +70,45 @@ public class BoardDao {
 		return result;
 	}
 
+	/**
+	 * 전체글수
+	 * 
+	 * @param map
+	 * @return
+	 */
 	public int boardListCount(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		log.debug("boardListCount");
-		
-		int count=sql.selectOne("defult.boardListCount",map);
+
+		int count = sql.selectOne("defult.boardListCount", map);
 		return count;
+	}
+
+	/**
+	 * 살세글보기
+	 * 
+	 * @param b_no
+	 * @return
+	 */
+	public BoardVO boardDetail(int b_no) {
+		// TODO Auto-generated method stub
+		BoardVO vo = sql.selectOne("defult.boardDetail", b_no);
+		return vo;
+	}
+
+	/**이전글 정보 반환
+	 * @param num
+	 * @return
+	 */
+	public BoardVO getPrev(int num) {
+		return sql.selectOne("getPrev", num);
+	}
+
+	/**다음글 정보 반환
+	 * @param num
+	 * @return
+	 */
+	public BoardVO getNext(int num) {
+		return sql.selectOne("getNext", num);
 	}
 }

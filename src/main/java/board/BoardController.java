@@ -61,8 +61,6 @@ public class BoardController {
 
 		Map<String, String> map = new HashMap<String, String>();
 
-		// log.debug("HashMap");
-		// int totalRowCount = svc.boardListCount();
 		int totalRowCount = svc.boardListCount(map);
 
 		PageUtil pu = new PageUtil(pageNum, totalRowCount, 10, 10);
@@ -79,6 +77,28 @@ public class BoardController {
 		model.addAttribute("pageNum", pageNum);
 
 		return "boardList";
+	}
+
+	@RequestMapping(value = "/boardDetail")
+	public String boardDetail(
+			Model model,
+			@RequestParam(value = "BoardVO", required = false) BoardVO bvo,
+			@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+			@RequestParam(value = "b_no") int b_no) {
+
+		log.debug("boardDetail");
+
+		HashMap<String, BoardVO> map = svc.boardDetail(b_no);
+
+		// model객체에 값을 담으면 뷰페이지에서 출력가능(유효함)
+		model.addAttribute("vo", map.get("vo"));
+		model.addAttribute("prev", map.get("prev"));
+		model.addAttribute("next", map.get("next"));
+		
+//		BoardVO vo = svc.boardDetail(b_no);
+//		model.addAttribute("vo", vo);
+
+		return "boardDetail";
 	}
 
 }

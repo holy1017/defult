@@ -2,52 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="defult">
 	<!-- http://installed.tistory.com/entry/SPRING30-11%EA%B2%8C%EC%8B%9C%ED%8C%90 -->
-	<!-- <typeAlias type="com.someapp.model.User" alias="User"/> -->
 
-	<!-- select * from testsample
-		where (textname like '%my%' and textname like '%java%' and textname like
-		'%spring%')
-		or (textname like '%my java spring%'); -->
-	<!-- 전체 글의 갯수 구하기 -->
-	<!-- select u_id,
-		u_nick,
-		b_no,
-		b_title,
-		defult_board.u_no,
-		b_eddate
-		from defult_user
-		inner join defult_board on (defult_user.u_no = defult_board.u_no)
-		order by b_no desc -->
-	<select
-		id="boardListCount"
-		resultType="int"
-		parameterType="hashmap">
-
-
-
-		select
-		NVL(count(1),0) <!-- value가 null 일경우 0을 반환, 아닐경우1 -->
-		from defult_user
-		inner join defult_board on (defult_user.u_no =
-		defult_board.u_no)
-		<where>
-			<if test="b_delete==0">
-				b_delete=0
-			</if>
-			<if test="u_id!=null and u_id!=''">
-				or u_id like '%'||#{u_id}||'%'
-			</if>
-			<if test="u_nick!=null and u_nick!=''">
-				or u_nick like '%'||#{u_nick}||'%'
-			</if>
-			<if test="b_title!=null and b_title!=''">
-				or b_title like '%'||#{keyword}||'%'
-			</if>
-			<if test="b_content!=null and b_content!=''">
-				or b_content like '%'||#{keyword}||'%'
-			</if>
-		</where>
-	</select>
 
 	<select
 		id="userList"
@@ -74,6 +29,35 @@
 		</where>
 		order by u_no desc
 	</select>
+	<!-- 전체 글의 갯수 구하기 -->
+	<select
+		id="boardListCount"
+		resultType="int"
+		parameterType="hashmap">
+		select
+		NVL(count(1),0) <!-- value가 null 일경우 0을 반환, 아닐경우1 -->
+		from defult_user
+		inner join defult_board on (defult_user.u_no =
+		defult_board.u_no)
+		<where>
+			<if test="b_delete==0">
+				b_delete=0
+			</if>
+			<if test="u_id!=null and u_id!=''">
+				or u_id like '%'||#{u_id}||'%'
+			</if>
+			<if test="u_nick!=null and u_nick!=''">
+				or u_nick like '%'||#{u_nick}||'%'
+			</if>
+			<if test="b_title!=null and b_title!=''">
+				or b_title like '%'||#{keyword}||'%'
+			</if>
+			<if test="b_content!=null and b_content!=''">
+				or b_content like '%'||#{keyword}||'%'
+			</if>
+		</where>
+	</select>
+	<!-- 게시글 목록 -->
 	<select
 		id="boardList"
 		parameterType="hashmap"
@@ -103,76 +87,60 @@
 		</where>
 		order by b_no desc
 	</select>
+	<!-- 상세글보기 -->
 	<select
-		id="getboardList"
-		parameterType="hashmap"
+		id="boardDetail"
+		parameterType="int"
 		resultType="BoardVO">
-		 SELECT * FROM (
-        SELECT 
-        ROW_NUMBER() OVER(ORDER BY b_no DESC) rnum,
-         b_no,
-         b_title,
-         <!-- b_content, -->
-         b_eddate,         
-         b_indate,
-         b_delete,
-         defult_board.u_no u_no,
-         u_id,
-         u_nick,
-         u_delete
-        FROM defult_user
-        inner join defult_board 
-         on (defult_user.u_no = defult_board.u_no)
-        <where>
-            <if test="searchValue != null and searchValue != ''">
-               <!--  <include refid="where-list"/> -->
-                <if test="b_title!=null and b_title!=''">
-				b_title like '%'||#{keyword}||'%'
-			</if>
-			<if test="b_content!=null and b_content!=''">
-				or b_content like '%'||#{keyword}||'%'
-			</if>
-            </if>
-        </where>
-    <![CDATA[
-    )  WHERE rnum >= #{startNum} AND rnum <= #{endNum}  
-    ]]>  
-    <!-- ORDER BY b_no DESC -->
-    <!-- 
-		SELECT *
-		FROM (
-		SELECT A.*, ROWNUM RNUM
-		FROM (
-		 select 
-         b_no,
-         b_title,
-         b_content,
-         b_eddate,         
-         b_indate,
-         b_delete,
-         defult_board.u_no u_no,
-         u_id,
-         u_nick,
-         u_delete      
-    from defult_user
-         inner join defult_board 
-         on (defult_user.u_no = defult_board.u_no)
+		SELECT
+		b_no,
+		b_title,
+		b_content,
+		b_eddate,
+		b_indate,
+		b_delete,
+		defult_board.u_no u_no,
+		u_id,
+		u_nick,
+		u_delete
+		FROM defult_user
+		inner join
+		defult_board
+		on (defult_user.u_no = defult_board.u_no)
+		where
+		b_no=#{value}
+	</select>
 
-		<where>
-			<if test="b_title!=null and b_title!=''">
-				b_title like '%'||#{keyword}||'%'
-			</if>
-			<if test="b_content!=null and b_content!=''">
-				or b_content like '%'||#{keyword}||'%'
-			</if>
-		</where>
-		ORDER BY b_no DESC
-		) A
-		)
-    <![CDATA[
-         WHERE RNUM >= #{startNum}
-           AND RNUM <= #{endNum}
-         ]]> -->
+	<!-- 이전 : 최신글 다음 : 과거글 -->
+	<!-- 이전글 -->
+	<select
+		id="getPrev"
+		parameterType="int"
+		resultType="BoardVO">
+        <![CDATA[
+        SELECT *
+          FROM (
+                 SELECT b_content FROM defult_board
+                  WHERE b_no > #{value}  
+                  ORDER BY b_no ASC
+               ) 
+         WHERE ROWNUM = 1
+         ]]>
+	</select>
+	<!-- 다음글 -->
+	<select
+		id="getNext"
+		parameterType="int"
+		resultType="BoardVO">
+        <![CDATA[
+        SELECT *
+          FROM (
+                 SELECT b_content FROM defult_board
+                  WHERE b_no < #{value}  
+                  ORDER BY b_no DESC
+               ) 
+         WHERE ROWNUM = 1
+         ]]>
 	</select>
 
 	<select
@@ -282,88 +250,4 @@
 		and u_no = #{u_no }
 		and r_delete =0
 	</update>
-	<!-- <select id="select" parameterType="hashmap" resultMap="bbsMap">
-		SELECT * FROM bbs
-		<where>
-		SQL Injection
-
-		<if test="sch_type != null and sch_value != null">
-		AND ${sch_type} LIKE '%${sch_value}%'
-		</if>
-
-
-		<choose>
-		<when test="sch_type == 'subject'">
-		AND subject like CONCAT('%', #{sch_value} , '%')
-		</when>
-		<when test="sch_type == 'content'">
-		AND content like CONCAT('%', #{sch_value} , '%')
-		</when>
-		<when test="sch_type == 'user_name'">
-		AND user_name like CONCAT('%', #{sch_value} , '%')
-		</when>
-		</choose>
-
-		</where>
-		</select> -->
-	<!-- <select
-		id="testboardSelect"
-		parameterType="sample.board.BoardVO"
-		resultType="sample.board.BoardVO">
-		SELECT
-		ROUND(DBMS_RANDOM.VALUE(1, 999),0) B_NO,
-		DBMS_RANDOM.STRING('P', 20) B_NICK,
-		DBMS_RANDOM.STRING('P', 64) B_PW,
-		DBMS_RANDOM.STRING('P', 4000) B_TEXT,
-		SYSDATE B_DATE
-		FROM dual
-		</select> -->
-	<!-- <select
-		id="boardList"
-		parameterType="sample.board.BoardVO"
-		resultType="sample.board.BoardVO">
-		select
-		b_no,
-		b_nick,
-		b_pw,
-		b_text,
-		b_date
-		from SAMPLE_BOARD
-		ORDER
-		BY B_NO DESC
-		</select> -->
-	<!-- <insert
-		id="testboardInsert"
-		parameterType="sample.board.BoardVO">
-		insert into sample_board (b_nick, b_pw, b_text)
-		values (
-		DBMS_RANDOM.STRING('X', ROUND(DBMS_RANDOM.VALUE(1, 20),0)) ,
-		DBMS_RANDOM.STRING('P', ROUND(DBMS_RANDOM.VALUE(1, 64),0)) ,
-		DBMS_RANDOM.STRING('X', ROUND(DBMS_RANDOM.VALUE(1, 4000),0)))
-		</insert> -->
-	<!-- <insert
-		id="boardInsert"
-		parameterType="sample.board.BoardVO">
-		insert into sample_board (b_nick, b_pw, b_text)
-		values (
-		#{b_nick} ,
-		#{b_pw } ,
-		#{b_text })
-		</insert> -->
-	<!--
-		<select id="getDeptList2" parameterType="com.vo.DeptVO"
-		resultType="HashMap">
-		SELECT deptno, dname, loc FROM dept
-		</select>
-		<insert id="deptInsert" parameterType="com.vo.DeptVO">
-		INSERT INTO dept VALUES(#{deptno},#{dname},#{loc})
-		</insert>
-		<update id="deptUpdate" parameterType="com.vo.DeptVO"> UPDATE dept SET
-		dname=#{dname}, loc=#{loc}
-		where deptno = #{deptno}
-		</update>
-		<delete id="deptDelete" parameterType="com.vo.DeptVO">
-		DELETE FROM dept WHERE deptno=#{deptno}
-		</delete>
-	-->
 </mapper>
