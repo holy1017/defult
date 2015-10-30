@@ -10,10 +10,12 @@ public class BoardVO {
 	private String b_content;
 	private String b_indate;
 	private String b_eddate;
+	private int b_delete;
 	private int u_no;
 	private String u_id;
 	private String u_nick;
-	private int b_delete;
+	private int u_delete;
+	
 
 	public int getB_no() {
 		return b_no;
@@ -85,5 +87,13 @@ public class BoardVO {
 
 	public void setU_nick(String u_nick) {
 		this.u_nick = u_nick;
+	}
+
+	public int getU_delete() {
+		return u_delete;
+	}
+
+	public void setU_delete(int u_delete) {
+		this.u_delete = u_delete;
 	}
 }

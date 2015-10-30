@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +38,8 @@ public class BoardController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	// @ResponseBody
-	public String sample(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String board(Locale locale, Model model) {
+		logger.info("Welcome board! The client locale is {}.", locale);
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -50,17 +51,44 @@ public class BoardController {
 		return "main";
 	}
 
-	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
+	// @RequestMapping(value = "/boardListCount", method = RequestMethod.GET)
+	// @ResponseBody
+	// public String boardListCount(
+	// Model model,
+	// @RequestParam("pageNum") int pageNum) {
+	//
+	// log.debug("boardListCount");
+	//
+	// HashMap<String, String> map = new HashMap<String, String>();
+	//
+	// int totalRowCount = svc.boardListCount(map);
+	// PageUtil pu = new PageUtil(pageNum, totalRowCount, 10, 10);
+	//
+	// map.put("startNum", String.valueOf(pu.getStartRow()));
+	// map.put("endNum", String.valueOf(pu.getEndRow()));
+	//
+	// model.addAttribute("startPageNum", pu.getStartPageNum());
+	// model.addAttribute("endPageNum", pu.getEndPageNum());
+	// model.addAttribute("totalPageCount", pu.getTotalPageCount());
+	// model.addAttribute("pageNum", pageNum);
+	//
+	// return "boardList";
+	// }
+
+	@RequestMapping(value = "/boardList")
 	public String boardList(
 			Model model,
 			@RequestParam(value = "BoardVO", required = false) BoardVO bvo,
-			@RequestParam("pageNum") int pageNum) {
+			@RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
 
 		log.debug("boardList");
 
-		HashMap<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<String, String>();
 
+		// log.debug("HashMap");
+		// int totalRowCount = svc.boardListCount();
 		int totalRowCount = svc.boardListCount(map);
+
 		PageUtil pu = new PageUtil(pageNum, totalRowCount, 10, 10);
 
 		map.put("startNum", String.valueOf(pu.getStartRow()));

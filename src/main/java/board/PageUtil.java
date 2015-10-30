@@ -1,6 +1,7 @@
 package board;
 
 public class PageUtil {
+	
 	private int pageNum; // 현재 페이지 번호
 	private int startRow; // 시작행번호
 	private int endRow; // 끝 행번호

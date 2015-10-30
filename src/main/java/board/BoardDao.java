@@ -2,6 +2,7 @@ package board;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,8 +28,10 @@ public class BoardDao {
 		return list;
 	}
 
-	public List<BoardVO> boardList(HashMap<String, String> map) {
-		List<BoardVO> list = sql.selectList("defult.boardList", map);
+	public List<BoardVO> boardList(Map<String, String> map) {
+		log.debug("boardList");
+//		List<BoardVO> list = sql.selectList("defult.boardList", map);
+		List<BoardVO> list = sql.selectList("defult.getboardList", map);
 		return list;
 	}
 
@@ -67,11 +70,11 @@ public class BoardDao {
 		return result;
 	}
 
-	public int boardListCount(HashMap<String, String> map) {
+	public int boardListCount(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		log.debug("boardListCount");
 		
-		int count=sql.selectOne("defult.boardListCount", map);
+		int count=sql.selectOne("defult.boardListCount",map);
 		return count;
 	}
 }

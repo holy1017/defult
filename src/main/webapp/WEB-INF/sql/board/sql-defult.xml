@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="defult">
-
+	<!-- http://installed.tistory.com/entry/SPRING30-11%EA%B2%8C%EC%8B%9C%ED%8C%90 -->
 	<!-- <typeAlias type="com.someapp.model.User" alias="User"/> -->
 
 	<!-- select * from testsample
@@ -9,7 +9,7 @@
 		'%spring%')
 		or (textname like '%my java spring%'); -->
 	<!-- 전체 글의 갯수 구하기 -->
-		<!-- select u_id,
+	<!-- select u_id,
 		u_nick,
 		b_no,
 		b_title,
@@ -22,13 +22,14 @@
 		id="boardListCount"
 		resultType="int"
 		parameterType="hashmap">
-	
+
 
 
 		select
 		NVL(count(1),0) <!-- value가 null 일경우 0을 반환, 아닐경우1 -->
 		from defult_user
-		inner join defult_board on (defult_user.u_no = defult_board.u_no)
+		inner join defult_board on (defult_user.u_no =
+		defult_board.u_no)
 		<where>
 			<if test="b_delete==0">
 				b_delete=0
@@ -57,7 +58,8 @@
 		u_id,
 		u_pw,
 		u_nick,
-		u_indate
+		u_indate,
+		u_delete
 		from defult_user
 		<where>
 			<if test="u_delete==0">
@@ -74,13 +76,14 @@
 	</select>
 	<select
 		id="boardList"
-		parameterType="BoardVO"
+		parameterType="hashmap"
 		resultType="BoardVO">
 		select b_no,
 		b_title,
 		b_content,
 		b_indate,
 		b_eddate,
+		b_delete,
 		u_no
 		from
 		defult_board
@@ -89,7 +92,7 @@
 				or b_delete=0
 			</if>
 			<if test="u_no!=null and u_no!=''">
-				u_no like '%'||#{u_no}||'%'
+				or u_no like '%'||#{u_no}||'%'
 			</if>
 			<if test="b_title!=null and b_title!=''">
 				or b_title like '%'||#{b_title}||'%'
@@ -100,6 +103,46 @@
 		</where>
 		order by b_no desc
 	</select>
+	<select
+		id="getboardList"
+		parameterType="hashmap"
+		resultType="BoardVO">
+		SELECT *
+		FROM (
+		SELECT A.*, ROWNUM RNUM
+		FROM (
+		 select 
+         b_no,
+         b_title,
+         b_eddate,
+         b_content,
+         b_indate,
+         b_delete,
+         defult_board.u_no u_no,
+         u_id,
+         u_nick,
+         u_delete      
+    from defult_user
+         inner join defult_board 
+         on (defult_user.u_no = defult_board.u_no)
+
+		<where>
+			<if test="b_title!=null and b_title!=''">
+				b_title like '%'||#{keyword}||'%'
+			</if>
+			<if test="b_content!=null and b_content!=''">
+				or b_content like '%'||#{keyword}||'%'
+			</if>
+		</where>
+		ORDER BY b_no DESC
+		) A
+		)
+    <![CDATA[
+         WHERE RNUM >= #{startNum}
+           AND RNUM <= #{endNum}
+         ]]>
+	</select>
+
 	<select
 		id="replyList"
 		parameterType="ReplyVO"
