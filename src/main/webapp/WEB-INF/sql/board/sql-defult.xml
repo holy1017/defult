@@ -107,6 +107,38 @@
 		id="getboardList"
 		parameterType="hashmap"
 		resultType="BoardVO">
+		 SELECT * FROM (
+        SELECT 
+        ROW_NUMBER() OVER(ORDER BY b_no DESC) rnum,
+         b_no,
+         b_title,
+         <!-- b_content, -->
+         b_eddate,         
+         b_indate,
+         b_delete,
+         defult_board.u_no u_no,
+         u_id,
+         u_nick,
+         u_delete
+        FROM defult_user
+        inner join defult_board 
+         on (defult_user.u_no = defult_board.u_no)
+        <where>
+            <if test="searchValue != null and searchValue != ''">
+               <!--  <include refid="where-list"/> -->
+                <if test="b_title!=null and b_title!=''">
+				b_title like '%'||#{keyword}||'%'
+			</if>
+			<if test="b_content!=null and b_content!=''">
+				or b_content like '%'||#{keyword}||'%'
+			</if>
+            </if>
+        </where>
+    <![CDATA[
+    )  WHERE rnum >= #{startNum} AND rnum <= #{endNum}  
+    ]]>  
+    <!-- ORDER BY b_no DESC -->
+    <!-- 
 		SELECT *
 		FROM (
 		SELECT A.*, ROWNUM RNUM
@@ -114,8 +146,8 @@
 		 select 
          b_no,
          b_title,
-         b_eddate,
          b_content,
+         b_eddate,         
          b_indate,
          b_delete,
          defult_board.u_no u_no,
@@ -140,7 +172,7 @@
     <![CDATA[
          WHERE RNUM >= #{startNum}
            AND RNUM <= #{endNum}
-         ]]>
+         ]]> -->
 	</select>
 
 	<select

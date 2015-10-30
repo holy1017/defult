@@ -51,30 +51,6 @@ public class BoardController {
 		return "main";
 	}
 
-	// @RequestMapping(value = "/boardListCount", method = RequestMethod.GET)
-	// @ResponseBody
-	// public String boardListCount(
-	// Model model,
-	// @RequestParam("pageNum") int pageNum) {
-	//
-	// log.debug("boardListCount");
-	//
-	// HashMap<String, String> map = new HashMap<String, String>();
-	//
-	// int totalRowCount = svc.boardListCount(map);
-	// PageUtil pu = new PageUtil(pageNum, totalRowCount, 10, 10);
-	//
-	// map.put("startNum", String.valueOf(pu.getStartRow()));
-	// map.put("endNum", String.valueOf(pu.getEndRow()));
-	//
-	// model.addAttribute("startPageNum", pu.getStartPageNum());
-	// model.addAttribute("endPageNum", pu.getEndPageNum());
-	// model.addAttribute("totalPageCount", pu.getTotalPageCount());
-	// model.addAttribute("pageNum", pageNum);
-	//
-	// return "boardList";
-	// }
-
 	@RequestMapping(value = "/boardList")
 	public String boardList(
 			Model model,

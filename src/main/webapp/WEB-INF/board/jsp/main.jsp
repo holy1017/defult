@@ -8,7 +8,7 @@
 </head>
 <body>
 	<ul>
-		<li><a href="list">글목록</a></li>
+		<li><a href="boardList">글목록</a></li>
 		<li><a href="white">글쓰기</a></li>
 	</ul>
 
