@@ -24,5 +24,6 @@
 			&lt;script&gt;alert("xss")&lt;/script&gt;
 		</form>
 	</div>
+	<%@ include file="/debug/debug.jsp"%>
 </body>
 </html>

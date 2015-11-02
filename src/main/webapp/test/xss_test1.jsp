@@ -27,5 +27,6 @@
 	<br>
 	<c:out value="${result }"></c:out>
 	<br>
+	<%@ include file="/debug/debug.jsp"%>
 </body>
 </html>
