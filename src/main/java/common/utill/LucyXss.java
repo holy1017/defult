@@ -10,17 +10,17 @@ import common.logger.LoggerInterceptor;
 public class LucyXss {
 	protected Log log = LogFactory.getLog(LoggerInterceptor.class);
 
-	public String doDefult(String str) {
+	public static String doDefult(String str) {
 		XssFilter filter = XssFilter.getInstance("lucy-xss.xml");
 		return filter.doFilter(str);
 	}
 
-	public String doSuperset(String str) {
+	public static String doSuperset(String str) {
 		XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
 		return filter.doFilter(str);
 	}
 
-	public String doFileSet(String str, String xmlFile) {
+	public static String doFileSet(String str, String xmlFile) {
 		XssFilter filter = XssFilter.getInstance(xmlFile);
 		return filter.doFilter(str);
 	}

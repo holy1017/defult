@@ -6,14 +6,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import common.utill.LucyXss;
 
 /**
  * Handles requests for the application home page.
@@ -107,5 +112,24 @@ public class SampleController {
 		logger.info("sampleResponseBodyMap");		
 		
 		return svc.sampleMap(locale,model);
+	}
+	@RequestMapping(value = "/xss_test")
+	public String xss_test(Locale locale, Model model,HttpServletRequest request) {
+		
+		logger.info("sampleResponseBodyMap");		
+		
+		//StringBuffer sb=new StringBuffer();
+		//sb.append(request.getParameter("data"));
+		String data=request.getParameter("data");
+//		log.debug(sb.toString());
+		log.debug(data);
+		
+		data=LucyXss.doDefult(data);
+		
+		log.debug(data);
+		
+		model.addAttribute("result",data );
+		
+		return "forward:/test/xss_result.jsp";
 	}
 }
