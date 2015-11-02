@@ -5,7 +5,7 @@
 	request.setCharacterEncoding("utf-8");
 	String data = request.getParameter("data");
 	try{
-		response.sendRedirect("domxss.jsp?message="+data);
+		response.sendRedirect("xss_dom.jsp?message="+data);
 	}catch(IOException e){
 		System.out.println("¿¡·¯");
 	}
