@@ -1,16 +1,6 @@
 # defult
 
-스프링 기본프로젝트
-
-커밋은 자주 합시다...
-
-=================
-
-회원가입이나 만들자..
-
-점점귀찬아진다;;
-
-=========로드 순서?=========
+=========로드 순서=========
 /defult/src/main/webapp/WEB-INF/web.xml
 	/WEB-INF/context/context-*.xml
 		/defult/src/main/webapp/WEB-INF/context/context-defult-orcl.xml
@@ -21,3 +11,9 @@
 	/defult/src/main/webapp/WEB-INF/board/servlet/servlet-board.xml
 		/WEB-INF/board/jsp/
 		component-scan base-package="board"
+		
+=== 151102 ===
+
+오늘의 테스트 커밋
+
+=== ===
