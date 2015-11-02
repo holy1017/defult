@@ -121,4 +121,19 @@
 		<url-pattern>/scott/*</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>daumeditor</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/daumeditor/servlet/servlet-*.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>daumeditor</servlet-name>
+		<url-pattern>/daumeditor/*</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
