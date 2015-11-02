@@ -106,4 +106,19 @@
 		<url-pattern>/board/*</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>scott</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/scott/servlet/servlet-*.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>scott</servlet-name>
+		<url-pattern>/scott/*</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

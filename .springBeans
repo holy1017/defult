@@ -12,6 +12,8 @@
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/common/servlet/servlet-common.xml</config>
+		<config>src/main/webapp/WEB-INF/context/context-board2.xml</config>
+		<config>src/main/webapp/WEB-INF/board2/servlet/servlet-board2.xml</config>
 		<config>src/main/webapp/WEB-INF/sample/servlet/servlet-sample.xml</config>
 		<config>src/main/webapp/WEB-INF/context/context-defult-orcl.xml</config>
 	</autoconfigs>
