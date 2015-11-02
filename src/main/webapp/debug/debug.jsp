@@ -14,15 +14,27 @@ javax.servlet.include.request_uri :<%=request.getAttribute("javax.servlet.includ
 
 <h1>param</h1>
 <c:forEach items="${param}" var="item">
-	<p>${item.key}=${item.value}</p>
+	<p>
+		<c:out value="${item.key}"></c:out>
+		=
+		<c:out value="${item.value}"></c:out>
+	</p>
 </c:forEach>
 
 <h1>sessionScope</h1>
 <c:forEach items="${sessionScope}" var="item">
-	<p>${item.key}=${item.value}</p>
+	<p>
+		<c:out value="${item.key}"></c:out>
+		=
+		<c:out value="${item.value}"></c:out>
+	</p>
 </c:forEach>
 
 <h1>requestScope</h1>
 <c:forEach items="${requestScope}" var="item">
-	<p>${item.key}=${item.value}</p>
+	<p>
+		<c:out value="${item.key}"></c:out>
+		=
+		<c:out value="${item.value}"></c:out>
+	</p>
 </c:forEach>

@@ -23,6 +23,11 @@
 				type="submit" value="run" />
 			&lt;script&gt;alert("xss")&lt;/script&gt;
 		</form>
+		<form action="xss_test4.jsp" id="form1" method="post">
+			xss3 <br /> <input type="text" name="data" id="data1" size="50" value="&lt;script&gt;alert('xss')&lt;/script&gt;" /> <input
+				type="submit" value="run" />
+			&lt;script&gt;alert("xss")&lt;/script&gt;
+		</form>
 	</div>
 	<%@ include file="/debug/debug.jsp"%>
 </body>
