@@ -1,18 +1,19 @@
 # defult
 
-스프링 기본프로젝트
+=========로드 순서=========
+/defult/src/main/webapp/WEB-INF/web.xml
+	/WEB-INF/context/context-*.xml
+		/defult/src/main/webapp/WEB-INF/context/context-defult-orcl.xml
+			/defult/src/main/webapp/WEB-INF/mybatis/mybatis-config.xml
+				typeAliases:package name="board" 등록
+			/WEB-INF/sql/**/sql-*.xml
+				/defult/src/main/webapp/WEB-INF/sql/board/sql-defult.xml
+	/defult/src/main/webapp/WEB-INF/board/servlet/servlet-board.xml
+		/WEB-INF/board/jsp/
+		component-scan base-package="board"
+		
+=== 151102 ===
 
-기본틀 만들어 보는중..
+오늘의 테스트 커밋
 
-커밋은 자주 합시다...
-
-=================
-
-기본jsp 추가
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-로거 추가 테스트
-
-으어 심심해서 커밋 한번....[뭐 임마?]
-
-기본문서 삭제, 이게 있으니 기본문서는 필없을거같네
+=== ===
