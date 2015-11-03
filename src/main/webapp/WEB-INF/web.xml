@@ -18,6 +18,16 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<filter>
+		<filter-name>XssFilter</filter-name>
+		<filter-class>common.utill.XSSFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>XssFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -37,13 +47,13 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>defult</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>	
+
+	<servlet>
 		<servlet-name>sample</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
@@ -52,12 +62,12 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>sample</servlet-name>
 		<url-pattern>/sample/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>common</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -67,12 +77,12 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>common</servlet-name>
 		<url-pattern>/common/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- http://www.oraclejavanew.kr/bbs/board.php?bo_table=LecSpring&wr_id=334 -->
 	<!-- 참조 -->
 	<servlet>
@@ -84,13 +94,13 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>board2</servlet-name>
 		<url-pattern>/board2/*</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>board</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -100,12 +110,12 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>board</servlet-name>
 		<url-pattern>/board/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>scott</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -115,12 +125,12 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>scott</servlet-name>
 		<url-pattern>/scott/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>daumeditor</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -130,10 +140,10 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>daumeditor</servlet-name>
 		<url-pattern>/daumeditor/*</url-pattern>
 	</servlet-mapping>
-	
+
 </web-app>
