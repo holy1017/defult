@@ -5,13 +5,23 @@
 * /defult/src/main/webapp/WEB-INF/web.xml	
   * === context ===
   * /WEB-INF/context/context-*.xml
-    * /defult/src/main/webapp/WEB-INF/context/context-defult-orcl.xml
+    * /WEB-INF/context/context-scott-orcl.xml
+    * /WEB-INF/context/context-defult.xml
+    * /WEB-INF/context/context-board2.xml
+    * /WEB-INF/context/context-defult-orcl.xml
       * /WEB-INF/sql/**/sql-*.xml
-        * /defult/src/main/webapp/WEB-INF/sql/board/sql-defult.xml
-      * /defult/src/main/webapp/WEB-INF/mybatis/mybatis-config.xml
+        * /WEB-INF/sql/board/sql-defult.xml
+      * /WEB-INF/mybatis/mybatis-config.xml
         * typeAliases:package name="board" 등록
   * === servlet ===
-  * /defult/src/main/webapp/WEB-INF/board/servlet/servlet-board.xml
+  * /WEB-INF/servlet/servlet-defult.xml
+  * /WEB-INF/scott/servlet/servlet-scott.xml
+  * /WEB-INF/common/servlet/servlet-common.xml
+  * /WEB-INF/sample/servlet/servlet-sample.xml
+    * component-scan base-package="sample"
+    * Mapped URL path [/**]
+  * /WEB-INF/board2/servlet/servlet-board2.xml
+  * /WEB-INF/board/servlet/servlet-board.xml
     * /WEB-INF/board/jsp/
     * component-scan base-package="board"
 
