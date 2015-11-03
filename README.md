@@ -1,23 +1,23 @@
 # defult
 
-=========로드 순서=========
+## =========로드 순서=========
 
-1. /defult/src/main/webapp/WEB-INF/web.xml	
-  1. /WEB-INF/context/context-*.xml
-    1. /defult/src/main/webapp/WEB-INF/context/context-defult-orcl.xml
-      1. /defult/src/main/webapp/WEB-INF/mybatis/mybatis-config.xml
-        1. typeAliases:package name="board" 등록
-			* /WEB-INF/sql/**/sql-*.xml
-				* /defult/src/main/webapp/WEB-INF/sql/board/sql-defult.xml
-	* /defult/src/main/webapp/WEB-INF/board/servlet/servlet-board.xml
-		* /WEB-INF/board/jsp/
-		* component-scan base-package="board"
+- /defult/src/main/webapp/WEB-INF/web.xml	
+  - /WEB-INF/context/context-*.xml
+    - /defult/src/main/webapp/WEB-INF/context/context-defult-orcl.xml
+      - /WEB-INF/sql/**/sql-*.xml
+        - /defult/src/main/webapp/WEB-INF/sql/board/sql-defult.xml
+      - /defult/src/main/webapp/WEB-INF/mybatis/mybatis-config.xml
+        - typeAliases:package name="board" 등록
+  - /defult/src/main/webapp/WEB-INF/board/servlet/servlet-board.xml
+    - /WEB-INF/board/jsp/
+    - component-scan base-package="board"
 	
-=== 151102 ===
+######  === 151102 ===
 
 오늘의 테스트 커밋
 
-=== 문법 테스트 ===
+##  === 문법 테스트 ===
 
 # The largest heading (an <h1>ㅅㄷㄴㅅ</h1> tag)
 ## The second largest heading (an <h2> tag)
