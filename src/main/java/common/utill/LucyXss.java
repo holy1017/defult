@@ -1,5 +1,7 @@
 package common.utill;
 
+import java.util.regex.Pattern;
+
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 
@@ -19,12 +21,14 @@ public class LucyXss {
 	 * @return
 	 */
 	public static String doFileSetNoComment(String str, String xmlFile) {
-		return XssFilter.getInstance(xmlFile,true).doFilter(str);
+		return XssFilter.getInstance(xmlFile, true).doFilter(str);
 		// XssFilter filter = XssFilter.getInstance(xmlFile);
 		// return filter.doFilter(str);
 	}
 
-	/** 기본값 lucy-xss-superset.xml
+	/**
+	 * 기본값 lucy-xss-superset.xml
+	 * 
 	 * @param str
 	 * @return
 	 */
@@ -44,23 +48,25 @@ public class LucyXss {
 		return doFileSetNoComment(str, "lucy-xss.xml");
 	}
 
-//	/**
-//	 * XssFilter를 lucy-xss-superset.xml 파일로 처리
-//	 * 
-//	 * @param str
-//	 * @return
-//	 */
-//	public static String doSuperset(String str) {
-//		return doFileSet(str, "lucy-xss-superset.xml");
-//	}
+	// /**
+	// * XssFilter를 lucy-xss-superset.xml 파일로 처리
+	// *
+	// * @param str
+	// * @return
+	// */
+	// public static String doSuperset(String str) {
+	// return doFileSet(str, "lucy-xss-superset.xml");
+	// }
 
-//	/**
-//	 * 주석 제거용 메서드
-//	 * 
-//	 * @param str
-//	 * @return
-//	 */
-//	public static String doSubstring(String str) {
-//		return str.substring(str.indexOf("-->") + 3);
-//	}
+	// /**
+	// * 주석 제거용 메서드
+	// *
+	// * @param str
+	// * @return
+	// */
+	// public static String doSubstring(String str) {
+	// return str.substring(str.indexOf("-->") + 3);
+	// }
+
+	
 }

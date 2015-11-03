@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import common.utill.LucyXss;
 
@@ -120,6 +121,7 @@ public class SampleController {
 	/**
 	 * 예제는 아래 파일로
 	 * /defult/src/main/webapp/test/xss_main.jsp
+	 * 
 	 * @param locale
 	 * @param model
 	 * @param request
@@ -143,5 +145,27 @@ public class SampleController {
 		model.addAttribute("result", data);
 
 		return "forward:/test/xss_result.jsp";
+	}
+
+	/**
+	 * http://localhost:8080/defult/sample/xsstest
+	 * 
+	 * @param req
+	 * @param md
+	 * @return
+	 */
+	@RequestMapping(value = "/xsstest")
+	public ModelAndView xsstest(HttpServletRequest req, Model md) {
+
+		String data = req.getParameter("data");
+		log.debug(data);
+
+		// md.addAttribute("resultData", data);
+		// return "xsstest";
+
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("resultData", data);
+		mv.setViewName("/xsstest");
+		return mv;
 	}
 }
