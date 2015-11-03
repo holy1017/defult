@@ -25,38 +25,39 @@ import common.utill.LucyXss;
  */
 @Controller
 public class SampleController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(SampleController.class);
-	private  final Logger log = LoggerFactory.getLogger(this.getClass());
-	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	// @Autowired(required=false)//필수가 아닌경우 빈으로 등록 안하게 설정
 	// @Qualifier("CommonService1")//는 타입으로(by type) ?아줌. 똑같은 클래스가 있을경우
 	// CommonService1 라는 구분값으로 ?음
 	// @Resource(name="testDao") //는 이름으로(by name) ?아줌
 	private SampleService svc;
-	
+
 	/**
 	 * 기본 경로 테스트
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	//@ResponseBody
+	// @ResponseBody
 	public String sample(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		
+
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
+
 		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+
+		model.addAttribute("serverTime", formattedDate);
+
 		return "sample";
 	}
-	
+
 	/**
 	 * mvc 테스트
+	 * 
 	 * @param locale
 	 * @param model
 	 * @return
@@ -64,14 +65,15 @@ public class SampleController {
 	@RequestMapping(value = "/sampleController", method = RequestMethod.GET)
 	@ResponseBody
 	public String sampleController(Locale locale, Model model) {
-		
-		logger.info("sampleController");		
-		
-		return svc.sampleService(locale,model);
+
+		logger.info("sampleController");
+
+		return svc.sampleService(locale, model);
 	}
-	
+
 	/**
 	 * ResponseBody 테스트
+	 * 
 	 * @param locale
 	 * @param model
 	 * @return
@@ -79,14 +81,15 @@ public class SampleController {
 	@RequestMapping(value = "/sampleResponseBody", method = RequestMethod.GET)
 	@ResponseBody
 	public String sampleResponseBody(Locale locale, Model model) {
-		
-		logger.info("sampleResponseBody");		
-		
+
+		logger.info("sampleResponseBody");
+
 		return "sampleResponseBody";
 	}
-	
+
 	/**
 	 * ResponseBody 테스트
+	 * 
 	 * @param locale
 	 * @param model
 	 * @return
@@ -94,12 +97,12 @@ public class SampleController {
 	@RequestMapping(value = "/sampleResponseBodyList", method = RequestMethod.GET)
 	@ResponseBody
 	public List<String> sampleResponseBodyList(Locale locale, Model model) {
-		
-		logger.info("sampleResponseBodyList");		
-		
-		return svc.sampleList(locale,model);
+
+		logger.info("sampleResponseBodyList");
+
+		return svc.sampleList(locale, model);
 	}
-	
+
 	/**
 	 * @param locale
 	 * @param model
@@ -108,28 +111,37 @@ public class SampleController {
 	@RequestMapping(value = "/sampleResponseBodyMap", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, String> sampleResponseBodyMap(Locale locale, Model model) {
-		
-		logger.info("sampleResponseBodyMap");		
-		
-		return svc.sampleMap(locale,model);
+
+		logger.info("sampleResponseBodyMap");
+
+		return svc.sampleMap(locale, model);
 	}
+
+	/**
+	 * 예제는 아래 파일로
+	 * /defult/src/main/webapp/test/xss_main.jsp
+	 * @param locale
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/xss_test")
-	public String xss_test(Locale locale, Model model,HttpServletRequest request) {
-		
-		logger.info("sampleResponseBodyMap");		
-		
-		//StringBuffer sb=new StringBuffer();
-		//sb.append(request.getParameter("data"));
-		String data=request.getParameter("data");
-//		log.debug(sb.toString());
+	public String xss_test(Locale locale, Model model, HttpServletRequest request) {
+
+		logger.info("sampleResponseBodyMap");
+
+		// StringBuffer sb=new StringBuffer();
+		// sb.append(request.getParameter("data"));
+		String data = request.getParameter("data");
+		// log.debug(sb.toString());
 		log.debug(data);
-		
-		data=LucyXss.doDefult(data);
-		
+
+		data = LucyXss.doDefultFileSetNoComment1(data);
+
 		log.debug(data);
-		
-		model.addAttribute("result",data );
-		
+
+		model.addAttribute("result", data);
+
 		return "forward:/test/xss_result.jsp";
 	}
 }
