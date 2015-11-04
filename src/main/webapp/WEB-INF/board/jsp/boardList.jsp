@@ -68,8 +68,8 @@
 			<tr>
 				<td><input class="easyui-searchbox" style="width: 150px">
 				</td>
-				<td><a href="javascript:void(0)" class="easyui-linkbutton"
-					data-options="iconCls:'icon-save',plain:true"></a></td>
+				<!-- <td><a href="javascript:void(0)" class="easyui-linkbutton"
+					data-options="iconCls:'icon-save',plain:true"></a></td> -->
 			</tr>
 		</table>
 	</div>
