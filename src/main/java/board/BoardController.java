@@ -90,18 +90,29 @@ public class BoardController {
 
 		return "boardList";
 	}
+
 	@RequestMapping(value = "/boardListPage")
 	public String boardListPage(
 			Model model,
-			@RequestParam(value = "BoardVO", required = false) BoardVO bvo
-			,@RequestParam(value = "pageNum", defaultValue = "1") int pageNum
-			,@RequestParam(value = "pageSize", defaultValue = "10") int pageSize
-			) {
-		
+			@RequestParam(value = "BoardVO", required = false) BoardVO bvo,
+			@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+			@RequestParam(value = "all", required = false) String all,
+			@RequestParam(value = "id", required = false) String id,
+			@RequestParam(value = "nick", required = false) String nick,
+			@RequestParam(value = "title", required = false) String title,
+			@RequestParam(value = "content", required = false) String content) {
+
 		log.debug("boardList");
-		
+
 		Map<String, String> map = new HashMap<String, String>();
-		
+
+		map.put("all", all);
+		map.put("id", id);
+		map.put("nick", nick);
+		map.put("title", title);
+		map.put("content", content);
+
 		int totalRowCount = svc.boardListCount(map);
 		
 		PageUtil pu = new PageUtil(pageNum, totalRowCount, pageSize, 10);
@@ -110,8 +121,9 @@ public class BoardController {
 		map.put("endNum", String.valueOf(pu.getEndRow()));
 		
 		List<BoardVO> list = svc.boardListPage(map);
-		
+
 		model.addAttribute("list", list);
+		
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("totalRowCount", totalRowCount);
 		model.addAttribute("startPageNum", pu.getStartPageNum());
@@ -119,6 +131,12 @@ public class BoardController {
 		model.addAttribute("totalPageCount", pu.getTotalPageCount());
 		model.addAttribute("pageNum", pageNum);
 		
+		model.addAttribute("all", all);
+		model.addAttribute("id", id);
+		model.addAttribute("nick", nick);
+		model.addAttribute("title", title);
+		model.addAttribute("content", content);
+
 		return "boardList";
 	}
 

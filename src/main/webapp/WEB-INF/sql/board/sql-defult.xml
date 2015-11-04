@@ -29,6 +29,7 @@
 		</where>
 		order by u_no desc
 	</select>
+
 	<!-- 전체 글의 갯수 구하기 -->
 	<select
 		id="boardListCount"
@@ -40,23 +41,27 @@
 		inner join defult_board on (defult_user.u_no =
 		defult_board.u_no)
 		<where>
-			<if test="b_delete==0">
-				b_delete=0
+			<if test="id!=null and id!=''">
+				or u_id like '%'||#{id}||'%'
 			</if>
-			<if test="u_id!=null and u_id!=''">
-				or u_id like '%'||#{u_id}||'%'
+			<if test="nick!=null and nick!=''">
+				or u_nick like '%'||#{nick}||'%'
 			</if>
-			<if test="u_nick!=null and u_nick!=''">
-				or u_nick like '%'||#{u_nick}||'%'
+			<if test="title!=null and title!=''">
+				or b_title like '%'||#{title}||'%'
 			</if>
-			<if test="b_title!=null and b_title!=''">
-				or b_title like '%'||#{keyword}||'%'
+			<if test="content!=null and content!=''">
+				or b_content like '%'||#{content}||'%'
 			</if>
-			<if test="b_content!=null and b_content!=''">
-				or b_content like '%'||#{keyword}||'%'
+			<if test="all!=null and all!=''">
+				or u_id like '%'||#{all}||'%'
+				or u_nick like '%'||#{all}||'%'
+				or b_title like '%'||#{all}||'%'
+				or b_content like '%'||#{all}||'%'
 			</if>
 		</where>
 	</select>
+
 	<!-- 게시글 목록 -->
 	<select
 		id="boardList"
@@ -87,6 +92,7 @@
 		</where>
 		order by b_no desc
 	</select>
+
 	<!-- 페이지별로 보기 -->
 	<select
 		id="boardListPage"
@@ -99,22 +105,42 @@
 		from ( select
 		b_no,
 		b_title,
-<!-- 		b_content, -->
+		<!-- b_content, -->
 		b_indate,
-<!-- 		b_eddate, -->
+		<!-- b_eddate, -->
 		b_delete,
-<!-- 		defult_board.u_no, -->
+		<!-- defult_board.u_no, -->
 		u_id,
-<!-- 		u_pw, -->
+		<!-- u_pw, -->
 		u_nick,
-<!-- 		u_indate, -->
-<!-- 		u_eddate, -->
+		<!-- u_indate, -->
+		<!-- u_eddate, -->
 		u_delete
 		from defult_user
 		inner join
 		defult_board
 		on (defult_user.u_no =
 		defult_board.u_no)
+		<where>
+			<if test="id!=null and id!=''">
+				or u_id like '%'||#{id}||'%'
+			</if>
+			<if test="nick!=null and nick!=''">
+				or u_nick like '%'||#{nick}||'%'
+			</if>
+			<if test="title!=null and title!=''">
+				or b_title like '%'||#{title}||'%'
+			</if>
+			<if test="content!=null and content!=''">
+				or b_content like '%'||#{content}||'%'
+			</if>
+			<if test="all!=null and all!=''">
+				or u_id like '%'||#{all}||'%'
+				or u_nick like '%'||#{all}||'%'
+				or b_title like '%'||#{all}||'%'
+				or b_content like '%'||#{all}||'%'
+			</if>
+		</where>
 		order by b_no
 		desc) bd)
     <![CDATA[

@@ -45,34 +45,68 @@
 		<tfoot></tfoot>
 	</table>
 
-
+	<script type="text/javascript">
+		function pg(pageNumber, pageSize) {
+			$(location).attr(
+					'href',
+					'boardListPage?pageNum=' + pageNumber 
+					+ '&pageSize='+ pageSize
+					<c:if test="${all!=null }">		+ '&all=${all}'			</c:if>
+					<c:if test="${id!=null }">		+ '&id=${id}'			</c:if>
+					<c:if test="${nick!=null }">	+ '&nick=${nick}'		</c:if>
+					<c:if test="${title!=null }">	+ '&title=${title}'		</c:if>
+					<c:if test="${content!=null }">	+ '&content=${content}'	</c:if>
+			)
+		}
+	</script>
 	<div class="easyui-pagination"
 		data-options="
 			pageList: [5,10,25,50,100,250,500,1000,2500,5000,10000],
 			pageNumber:${pageNum },
 			total:${totalRowCount },
 			pageSize:${pageSize },
-			onSelectPage:function(pageNumber, pageSize){
-				$(location).attr(
-						'href',
-						'boardListPage?pageNum=' + pageNumber + '&pageSize='
-								+ pageSize)
-			},
+			onSelectPage:pg,
 			buttons:$('#p_buttons')
 			"></div>
 
-
+	<script type="text/javascript">
+		function sch(value, name) {
+			// 			alert(value + ":" + name)
+			$(location).attr('href', 'boardListPage?' + name + '=' + value)
+		}
+	</script>
 	<div id="p_buttons">
 		<table>
 			<!-- style="border-spacing: 0" -->
 			<tr>
-				<td><input class="easyui-searchbox" style="width: 150px">
+				<td><input class="easyui-searchbox" style="width: 150px"
+					data-options="searcher:sch,prompt:'Please Input Value',menu:'#mm',
+					value:'${all }${id }${nick }${title }${content }'">
 				</td>
+				<td><div id="mm" style="width: 120px">
+						<div
+							data-options="name:'all'	<c:if test="${all!=null }">		,selected:true</c:if>">All</div>
+						<div
+							data-options="name:'id'		<c:if test="${id!=null }">		,selected:true</c:if>">Id</div>
+						<div
+							data-options="name:'nick'	<c:if test="${nick!=null }">	,selected:true</c:if>">Nick</div>
+						<div
+							data-options="name:'title'	<c:if test="${title!=null }">	,selected:true</c:if>">Title</div>
+						<div
+							data-options="name:'content'<c:if test="${content!=null }">	,selected:true</c:if>">Content</div>
+					</div></td>
 				<!-- <td><a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-save',plain:true"></a></td> -->
 			</tr>
 		</table>
 	</div>
+
+
+
+
+
+
+
 
 	<%@ include file="/debug/debug.jsp"%>
 </body>
