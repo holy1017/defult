@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.utill.PageUtil;
 
@@ -60,8 +61,8 @@ public class UserController {
 	@RequestMapping(value = "/{jsp}")
 	// @ResponseBody
 	public String userAll(@PathVariable String jsp) {
-		log.debug("userAll:"+jsp);
-		return "user/"+jsp;
+		log.debug("userAll:" + jsp);
+		return "user/" + jsp;
 	}
 
 	@RequestMapping(value = "/userList")
@@ -100,5 +101,42 @@ public class UserController {
 		model.addAttribute("shvalue", shvalue);
 
 		return "user/userList";
+	}
+
+	@RequestMapping(value = "/userInsert")
+	// @ResponseBody
+	public String userInsert(
+			Model model,
+			@RequestParam(value = "p1", required = false) String p1,
+			@RequestParam(value = "p2", required = false) String p2,
+			@RequestParam(value = "id") String id,
+			@RequestParam(value = "pwd") String pwd,
+			@RequestParam(value = "rpwd") String rpwd,
+			@RequestParam(value = "nick") String nick) {
+
+		log.debug(p1);
+		log.debug(p2);
+		log.debug(id);
+		log.debug(pwd);
+		log.debug(rpwd);
+		log.debug(nick);
+
+		if (id == null
+				|| pwd == null
+				|| rpwd == null
+				|| !(pwd.equals(rpwd))
+				|| nick == null
+				|| id.equals("")
+				|| pwd.equals("")
+				|| rpwd.equals("")
+				|| nick.equals("")) {
+			model.addAttribute("msg", "userInsert False");
+			return "user/userInsertForm";
+			// return "userInsert False";
+		}
+
+		model.addAttribute("msg", "userInsert ok");
+		return "user/userInsertForm";
+		// return "userInsert ok";
 	}
 }

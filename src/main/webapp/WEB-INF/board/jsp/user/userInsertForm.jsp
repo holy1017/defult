@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,7 +9,44 @@
 <jsp:include page="../include/easyui.jsp"></jsp:include>
 </head>
 <body>
+	<c:if test="${msg != null}">
+		<script type="text/javascript">
+			alert('${msg}')
+		</script>
+	</c:if>
+	<script type="text/javascript">
+		$.extend($.fn.validatebox.defaults.rules, {
+			equals : {
+				validator : function(value, param) {
+					return value == $(param[0]).val();
+				},
+				message : '위 비번과 일치하지 않습니다.'
+			},
+			minLength : {
+				validator : function(value, param) {
+					return value.length >= param[0];
+				},
+				message : '최소 {0} 글자 이상 적어주세요.'
+			}
+		});
+		$(function() {
+			$("#send").click(function() {
+				$('#ff').form('submit', {
+					url : "userInsert",
+					onSubmit : function(param) {
+						param.p1 = 'value1';
+						param.p2 = 'value2';
+						// do some check
+						// return false to prevent submit;
+					}
+// 					,success : function(data) {
+// 						alert(data)
+// 					}
+				});
+			})
 
+		})
+	</script>
 	<form id="ff" method="post">
 		<div>
 			<label for="id">Id:</label> <input class="easyui-validatebox"
@@ -44,22 +82,7 @@
 				data-options="
 				missingMessage:'비번 입력하세요'
 				">
-			<script type="text/javascript">
-				$.extend($.fn.validatebox.defaults.rules, {
-					equals : {
-						validator : function(value, param) {
-							return value == $(param[0]).val();
-						},
-						message : '위 비번과 일치하지 않습니다.'
-					},
-					minLength : {
-						validator : function(value, param) {
-							return value.length >= param[0];
-						},
-						message : '최소 {0} 글자 이상 적어주세요.'
-					}
-				});
-			</script>
+
 		</div>
 
 		<div>
@@ -70,6 +93,9 @@
 				,missingMessage:'닉네임 입력하세요'
 				,invalidMessage:'닉네임'
 				" />
+		</div>
+		<div id="">
+			<input id="send" type="button" value="전송" />
 		</div>
 	</form>
 	<pre>	

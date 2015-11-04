@@ -9,6 +9,7 @@
 <body>
 	<ul>
 		<li><a href="userList">유저 목록 페이지별 보기</a></li>
+		<li><a href="userInsertForm">유저 목록 페이지별 보기</a></li>
 	</ul>
 
 	<%@ include file="/debug/debug.jsp"%>
