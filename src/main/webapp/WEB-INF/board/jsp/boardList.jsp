@@ -50,12 +50,12 @@
 			$(location).attr(
 					'href',
 					'boardListPage?pageNum=' + pageNumber 
-					+ '&pageSize='+ pageSize
-					<c:if test="${all!=null }">		+ '&all=${all}'			</c:if>
+					+ '&pageSize='+ pageSize+'&shtype=${shtype}&shvalue=${shvalue}'
+/* 					<c:if test="${all!=null }">		+ '&all=${all}'			</c:if>
 					<c:if test="${id!=null }">		+ '&id=${id}'			</c:if>
 					<c:if test="${nick!=null }">	+ '&nick=${nick}'		</c:if>
 					<c:if test="${title!=null }">	+ '&title=${title}'		</c:if>
-					<c:if test="${content!=null }">	+ '&content=${content}'	</c:if>
+					<c:if test="${content!=null }">	+ '&content=${content}'	</c:if> */
 			)
 		}
 	</script>
@@ -70,9 +70,9 @@
 			"></div>
 
 	<script type="text/javascript">
-		function sch(value, name) {
+		function sch(value, type) {
 			// 			alert(value + ":" + name)
-			$(location).attr('href', 'boardListPage?' + name + '=' + value)
+			$(location).attr('href', 'boardListPage?&shtype='+type+'&shvalue='+value)
 		}
 	</script>
 	<div id="p_buttons">
@@ -81,19 +81,19 @@
 			<tr>
 				<td><input class="easyui-searchbox" style="width: 150px"
 					data-options="searcher:sch,prompt:'Please Input Value',menu:'#mm',
-					value:'${all }${id }${nick }${title }${content }'">
+					value:'${shvalue }'">
 				</td>
 				<td><div id="mm" style="width: 120px">
 						<div
-							data-options="name:'all'	<c:if test="${all!=null }">		,selected:true</c:if>">All</div>
+							data-options="name:'all'	<c:if test="${'all'==shtype }">		,selected:true</c:if>">All</div>
 						<div
-							data-options="name:'id'		<c:if test="${id!=null }">		,selected:true</c:if>">Id</div>
+							data-options="name:'id'		<c:if test="${'id'==shtype }">		,selected:true</c:if>">Id</div>
 						<div
-							data-options="name:'nick'	<c:if test="${nick!=null }">	,selected:true</c:if>">Nick</div>
+							data-options="name:'nick'	<c:if test="${'nick'==shtype }">	,selected:true</c:if>">Nick</div>
 						<div
-							data-options="name:'title'	<c:if test="${title!=null }">	,selected:true</c:if>">Title</div>
+							data-options="name:'title'	<c:if test="${'title'==shtype }">	,selected:true</c:if>">Title</div>
 						<div
-							data-options="name:'content'<c:if test="${content!=null }">	,selected:true</c:if>">Content</div>
+							data-options="name:'content'<c:if test="${'content'==shtype }">	,selected:true</c:if>">Content</div>
 					</div></td>
 				<!-- <td><a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-save',plain:true"></a></td> -->

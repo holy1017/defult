@@ -97,21 +97,25 @@ public class BoardController {
 			@RequestParam(value = "BoardVO", required = false) BoardVO bvo,
 			@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-			@RequestParam(value = "all", required = false) String all,
+/*			@RequestParam(value = "all", required = false) String all,
 			@RequestParam(value = "id", required = false) String id,
 			@RequestParam(value = "nick", required = false) String nick,
 			@RequestParam(value = "title", required = false) String title,
-			@RequestParam(value = "content", required = false) String content) {
+			@RequestParam(value = "content", required = false) String content,*/
+			@RequestParam(value = "shtype", required = false) String shtype,
+			@RequestParam(value = "shvalue", required = false) String shvalue
+			) {
 
 		log.debug("boardList");
 
 		Map<String, String> map = new HashMap<String, String>();
 
-		map.put("all", all);
+/*		map.put("all", all);
 		map.put("id", id);
 		map.put("nick", nick);
 		map.put("title", title);
-		map.put("content", content);
+		map.put("content", content);*/
+		map.put(shtype, shvalue);
 
 		int totalRowCount = svc.boardListCount(map);
 		
@@ -131,11 +135,13 @@ public class BoardController {
 		model.addAttribute("totalPageCount", pu.getTotalPageCount());
 		model.addAttribute("pageNum", pageNum);
 		
-		model.addAttribute("all", all);
+/*		model.addAttribute("all", all);
 		model.addAttribute("id", id);
 		model.addAttribute("nick", nick);
 		model.addAttribute("title", title);
-		model.addAttribute("content", content);
+		model.addAttribute("content", content);*/
+		model.addAttribute("shtype", shtype);
+		model.addAttribute("shvalue", shvalue);
 
 		return "boardList";
 	}
