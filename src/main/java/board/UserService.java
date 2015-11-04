@@ -21,7 +21,7 @@ public class UserService {
 		// TODO Auto-generated method stub
 		log.debug("boardListCount");
 		int count = dao.userListCount(map);
-		return 0;
+		return count;
 	}
 
 	public List<UserVO> userListPage(Map<String, String> map) {
