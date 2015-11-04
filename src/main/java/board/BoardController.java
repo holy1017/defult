@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import common.utill.PageUtil;
+
 /**
  * http://localhost:8080/defult/board/
  * Handles requests for the application home page.

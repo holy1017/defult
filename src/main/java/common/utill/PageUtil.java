@@ -1,4 +1,4 @@
-package board;
+package common.utill;
 
 public class PageUtil {
 	
