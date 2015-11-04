@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,7 @@ import common.utill.PageUtil;
  * http://localhost:8080/defult/board/
  * Handles requests for the application home page.
  */
-@RequestMapping(value = "/user/")//, method = RequestMethod.POST
+@RequestMapping(value = "/user/") // , method = RequestMethod.POST
 @Controller
 public class UserController {
 
@@ -54,6 +55,13 @@ public class UserController {
 		model.addAttribute("serverTime", formattedDate);
 
 		return "user/userMain";
+	}
+
+	@RequestMapping(value = "/{jsp}")
+	// @ResponseBody
+	public String userAll(@PathVariable String jsp) {
+		log.debug("userAll:"+jsp);
+		return "user/"+jsp;
 	}
 
 	@RequestMapping(value = "/userList")
