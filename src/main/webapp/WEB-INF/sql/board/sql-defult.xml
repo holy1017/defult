@@ -3,31 +3,64 @@
 <mapper namespace="defult">
 	<!-- http://installed.tistory.com/entry/SPRING30-11%EA%B2%8C%EC%8B%9C%ED%8C%90 -->
 
-
+	<!-- 전체 글의 갯수 구하기 -->
+	<select
+		id="userListCount"
+		resultType="int"
+		parameterType="hashmap">
+		select
+		NVL(count(1),0) <!-- value가 null 일경우 0을 반환, 아닐경우1 -->
+		from defult_user
+		<where>
+			<if test="id!=null and id!=''">
+				or u_id like '%'||#{id}||'%'
+			</if>
+			<if test="nick!=null and nick!=''">
+				or u_nick like '%'||#{nick}||'%'
+			</if>
+			<if test="all!=null and all!=''">
+				or u_id like '%'||#{all}||'%'
+				or u_nick like
+				'%'||#{all}||'%'
+			</if>
+		</where>
+	</select>
 	<select
 		id="userList"
-		parameterType="UserVO"
+		parameterType="hashmap"
 		resultType="UserVO">
-		select
+		select *
+		from (select
+		rownum rnum,
+		u.*
+		from ( select
 		u_no,
 		u_id,
 		u_pw,
 		u_nick,
 		u_indate,
-		u_delete
+		u_delete,
+		u_eddate
 		from defult_user
 		<where>
-			<if test="u_delete==0">
-				or u_delete=0
+			<if test="id!=null and id!=''">
+				or u_id like '%'||#{id}||'%'
 			</if>
-			<if test="u_id!=null and u_id!=''">
-				or u_id like '%'||#{u_id}||'%'
+			<if test="nick!=null and nick!=''">
+				or u_nick like '%'||#{nick}||'%'
 			</if>
-			<if test="u_nick!=null and u_nick!=''">
-				or u_nick like '%'||#{u_nick}||'%'
+			<if test="all!=null and all!=''">
+				or u_id like '%'||#{all}||'%'
+				or u_nick like
+				'%'||#{all}||'%'
 			</if>
 		</where>
-		order by u_no desc
+		order by u_no
+		desc) u)
+    <![CDATA[
+         where rnum >= #{startNum}
+           and rnum <= #{endNum}
+         ]]>
 	</select>
 
 	<!-- 전체 글의 갯수 구하기 -->
@@ -55,9 +88,11 @@
 			</if>
 			<if test="all!=null and all!=''">
 				or u_id like '%'||#{all}||'%'
-				or u_nick like '%'||#{all}||'%'
+				or u_nick like
+				'%'||#{all}||'%'
 				or b_title like '%'||#{all}||'%'
-				or b_content like '%'||#{all}||'%'
+				or b_content like
+				'%'||#{all}||'%'
 			</if>
 		</where>
 	</select>
@@ -136,9 +171,11 @@
 			</if>
 			<if test="all!=null and all!=''">
 				or u_id like '%'||#{all}||'%'
-				or u_nick like '%'||#{all}||'%'
+				or u_nick like
+				'%'||#{all}||'%'
 				or b_title like '%'||#{all}||'%'
-				or b_content like '%'||#{all}||'%'
+				or b_content like
+				'%'||#{all}||'%'
 			</if>
 		</where>
 		order by b_no

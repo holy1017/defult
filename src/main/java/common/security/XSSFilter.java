@@ -11,8 +11,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class XSSFilter implements Filter{
 
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
@@ -22,7 +27,7 @@ public class XSSFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		System.out.println("doFilter 호출");
+		log.debug("doFilter 호출");
 		chain.doFilter(new XSSRequestWrapper((HttpServletRequest) request),response);
 	}
 

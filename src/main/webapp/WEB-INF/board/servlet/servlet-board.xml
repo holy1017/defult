@@ -25,7 +25,7 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
 <!-- 	<resources mapping="/res/**" location="/res/" /> -->
-	<resources mapping="/**" location="/jquery-easyui-1.4.4/" />
+	<resources mapping="/eu/**" location="/jquery-easyui-1.4.4/" />
 	<resources mapping="/res/**" location="/WEB-INF/board/res/" />
 <!-- 	<resources mapping="/js/**" location="/res/js/" />
 	<resources mapping="/css/**" location="/res/css/" /> -->

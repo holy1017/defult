@@ -44,7 +44,7 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	private String stripXSS(String value) {
-		System.out.println("stripXSS : value = " + value);
+		log.debug("stripXSS : value = " + value);
 		if (value != null) {
 			value = value.replaceAll("\0", "");
 
@@ -56,7 +56,7 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
 				}
 			}
 		}
-		System.out.println("result : " + value);
+		log.debug("result : " + value);
 		return value;
 	}
 

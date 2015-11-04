@@ -52,7 +52,7 @@ public class BoardController {
 
 		model.addAttribute("serverTime", formattedDate);
 
-		return "main";
+		return "boardMain";
 	}
 
 	/**
@@ -94,7 +94,6 @@ public class BoardController {
 	@RequestMapping(value = "/boardListPage")
 	public String boardListPage(
 			Model model,
-			@RequestParam(value = "BoardVO", required = false) BoardVO bvo,
 			@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
 			@RequestParam(value = "shtype", required = false) String shtype,

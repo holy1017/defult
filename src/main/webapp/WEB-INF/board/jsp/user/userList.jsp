@@ -5,40 +5,39 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>boardList.jsp</title>
+<title>userList.jsp</title>
 
 <!-- <link rel="stylesheet" type="text/css" href="themes/default/easyui.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="themes/icon.css"> -->
-<!-- <link rel="stylesheet" type="text/css" href="../demo.css"> --> 
 <!-- <script type="text/javascript" src="jquery.min.js"></script> -->
 <!-- <script type="text/javascript" src="jquery.easyui.min.js"></script> -->
-<jsp:include page="include/easyui.jsp"></jsp:include>
+
+<jsp:include page="../include/easyui.jsp"></jsp:include>
 </head>
 <body>
 	<table>
 		<thead>
 			<tr>
-				<th>글번호</th>
-				<th>제목</th>
-				<!-- <th>내용</th> -->
-				<th>삭제여부</th>
 				<th>회원번호</th>
 				<th>아이디</th>
+				<th>비번</th>
 				<th>닉네임</th>
+				<th>가입날자</th>
 				<th>탈퇴여부</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${list }" var="row">
 				<tr>
-					<td>${row.b_no}</td>
-					<td><a href="boardDetail?b_no=${row.b_no}">${row.b_title}</a></td>
-					<%-- <td>${row.b_content}</td> --%>
-					<td>${row.b_delete}</td>
 					<td>${row.u_no}</td>
 					<td>${row.u_id}</td>
-					<td><a href="userDetail?u_no=${row.u_no}">${row.u_nick}</a></td>
+					<td>${row.u_pw}</td>
+					<td>${row.u_nick}</td>
+					<td>${row.u_indate}</td>
 					<td>${row.u_delete}</td>
+					<%-- 					<td><a href="boardDetail?b_no=${row.b_no}">${row.b_title}</a></td> --%>
+					<%-- <td>${row.b_content}</td> --%>
+					<%-- 					<td><a href="userDetail?u_no=${row.u_no}">${row.u_nick}</a></td> --%>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -47,11 +46,12 @@
 
 	<script type="text/javascript">
 		function pg(pageNumber, pageSize) {
-			$(location).attr(
-					'href',
-					'boardListPage?pageNum=' + pageNumber 
-					+ '&pageSize='+ pageSize+'&shtype=${shtype}&shvalue=${shvalue}'
-			)
+			$(location)
+					.attr(
+							'href',
+							'userList?pageNum=' + pageNumber
+									+ '&pageSize=' + pageSize
+									+ '&shtype=${shtype}&shvalue=${shvalue}')
 		}
 	</script>
 	<div class="easyui-pagination"
@@ -66,7 +66,8 @@
 
 	<script type="text/javascript">
 		function sch(value, type) {
-			$(location).attr('href', 'boardListPage?&shtype='+type+'&shvalue='+value)
+			$(location).attr('href',
+					'userList?&shtype=' + type + '&shvalue=' + value)
 		}
 	</script>
 	<div id="p_buttons">
@@ -84,10 +85,6 @@
 							data-options="name:'id'		<c:if test="${'id'==shtype }">		,selected:true</c:if>">Id</div>
 						<div
 							data-options="name:'nick'	<c:if test="${'nick'==shtype }">	,selected:true</c:if>">Nick</div>
-						<div
-							data-options="name:'title'	<c:if test="${'title'==shtype }">	,selected:true</c:if>">Title</div>
-						<div
-							data-options="name:'content'<c:if test="${'content'==shtype }">	,selected:true</c:if>">Content</div>
 					</div></td>
 			</tr>
 		</table>

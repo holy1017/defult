@@ -1,7 +1,10 @@
 package common.utill;
 
+import org.springframework.ui.Model;
+
 public class PageUtil {
 	
+	private int totalRowCount; // 전체글의 갯수
 	private int pageNum; // 현재 페이지 번호
 	private int startRow; // 시작행번호
 	private int endRow; // 끝 행번호
@@ -10,10 +13,34 @@ public class PageUtil {
 	private int endPageNum; // 끝페이지번호
 	private int rowBlockCount; // 보여줄 글의 행갯수
 	private int pageBlockCount; // 한페이지에 보여줄 페이지 갯수
-	private int totalRowCount; // 전체글의 갯수
 
 	public PageUtil() {
 		// TODO Auto-generated constructor stub
+	}
+	/**
+	 * tlwkrgod
+	 * @param pageNum
+	 *            현재페이지번호
+	 * @param totalRowCount
+	 *            전체글의 갯수
+	 * @param rowBlockCount
+	 *            한페이지에 보여줄 글의 갯수
+	 * @param pageBlockCount
+	 *            한페이지에 보여줄 페이지의 갯수
+	 * @param model
+	 */
+	public PageUtil(int pageNum, int totalRowCount, int rowBlockCount, int pageBlockCount,Model model) {
+		// TODO Auto-generated constructor stub
+		this(pageNum, totalRowCount, rowBlockCount, pageBlockCount);
+		model.addAttribute("totalRowCount", totalRowCount);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("startRow", startRow);
+		model.addAttribute("endRow", endRow);
+		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("endPageNum", endPageNum);
+		model.addAttribute("rowBlockCount", rowBlockCount);
+		model.addAttribute("pageBlockCount", pageBlockCount);
 	}
 
 	/**
