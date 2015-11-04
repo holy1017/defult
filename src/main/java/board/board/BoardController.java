@@ -52,7 +52,7 @@ public class BoardController {
 
 		model.addAttribute("serverTime", formattedDate);
 
-		return "boardMain";
+		return "board/boardMain";
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class BoardController {
 		model.addAttribute("totalPageCount", pu.getTotalPageCount());
 		model.addAttribute("pageNum", pageNum);
 
-		return "boardList";
+		return "board/boardList";
 	}
 
 	@RequestMapping(value = "/boardListPage")
@@ -128,7 +128,7 @@ public class BoardController {
 		model.addAttribute("shtype", shtype);
 		model.addAttribute("shvalue", shvalue);
 
-		return "boardList";
+		return "board/boardList";
 	}
 
 	@RequestMapping(value = "/boardDetail")
@@ -150,7 +150,7 @@ public class BoardController {
 		// BoardVO vo = svc.boardDetail(b_no);
 		// model.addAttribute("vo", vo);
 
-		return "boardDetail";
+		return "board/boardDetail";
 	}
 
 }

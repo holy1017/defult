@@ -12,7 +12,7 @@
 <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> --> 
 <!-- <script type="text/javascript" src="jquery.min.js"></script> -->
 <!-- <script type="text/javascript" src="jquery.easyui.min.js"></script> -->
-<jsp:include page="include/easyui.jsp"></jsp:include>
+<jsp:include page="../include/easyui.jsp"></jsp:include>
 </head>
 <body>
 	<table>
