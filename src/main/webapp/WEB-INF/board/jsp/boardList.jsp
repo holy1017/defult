@@ -51,11 +51,6 @@
 					'href',
 					'boardListPage?pageNum=' + pageNumber 
 					+ '&pageSize='+ pageSize+'&shtype=${shtype}&shvalue=${shvalue}'
-/* 					<c:if test="${all!=null }">		+ '&all=${all}'			</c:if>
-					<c:if test="${id!=null }">		+ '&id=${id}'			</c:if>
-					<c:if test="${nick!=null }">	+ '&nick=${nick}'		</c:if>
-					<c:if test="${title!=null }">	+ '&title=${title}'		</c:if>
-					<c:if test="${content!=null }">	+ '&content=${content}'	</c:if> */
 			)
 		}
 	</script>
@@ -71,7 +66,6 @@
 
 	<script type="text/javascript">
 		function sch(value, type) {
-			// 			alert(value + ":" + name)
 			$(location).attr('href', 'boardListPage?&shtype='+type+'&shvalue='+value)
 		}
 	</script>
@@ -95,8 +89,6 @@
 						<div
 							data-options="name:'content'<c:if test="${'content'==shtype }">	,selected:true</c:if>">Content</div>
 					</div></td>
-				<!-- <td><a href="javascript:void(0)" class="easyui-linkbutton"
-					data-options="iconCls:'icon-save',plain:true"></a></td> -->
 			</tr>
 		</table>
 	</div>
