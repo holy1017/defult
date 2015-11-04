@@ -1,4 +1,4 @@
-package board;
+package board.user;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +15,8 @@ public class UserDao {
 	
 	protected Log log = LogFactory.getLog(this.getClass());
 
+	private final String nameSpace="board.user.";
+	
 	// @Autowired
 	@Autowired(required = false) // 필수가 아닌경우 등록 안하게 설정
 	@Qualifier("defultTemplate") // 는 타입으로(by type) 찿아줌. 똑같은 클래스가
@@ -25,7 +27,7 @@ public class UserDao {
 	public int userListCount(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		log.debug("userListCount");
-		int count = sql.selectOne("defult.userListCount", map);
+		int count = sql.selectOne(nameSpace+"ListCount", map);
 		return count;
 	}
 
@@ -33,7 +35,7 @@ public class UserDao {
 		// TODO Auto-generated method stub
 		log.debug("userListPage");
 		// List<BoardVO> list = sql.selectList("defult.boardList", map);
-		List<UserVO> list = sql.selectList("defult.userList", map);
+		List<UserVO> list = sql.selectList(nameSpace+"List", map);
 		return list;
 	}
 }

@@ -1,4 +1,4 @@
-package board;
+package board.board;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -56,6 +56,7 @@ public class BoardController {
 	}
 
 	/**
+	 * 이 메소드 제거해야하는데.. boardListPage를 쓰삼
 	 * http://localhost:8080/defult/board/boardList
 	 * 
 	 * @param model

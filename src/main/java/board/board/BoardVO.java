@@ -1,4 +1,4 @@
-package board;
+package board.board;
 
 import org.apache.ibatis.type.Alias;
 

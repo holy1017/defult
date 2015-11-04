@@ -1,4 +1,4 @@
-package board;
+package board.board;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,4 +1,4 @@
-package board;
+package board.reply;
 
 import org.apache.ibatis.type.Alias;
 

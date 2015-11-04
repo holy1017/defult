@@ -1,4 +1,4 @@
-package board;
+package board.user;
 
 import java.util.List;
 import java.util.Map;

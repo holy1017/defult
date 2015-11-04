@@ -1,4 +1,4 @@
-package board;
+package board.user;
 
 import org.apache.ibatis.type.Alias;
 

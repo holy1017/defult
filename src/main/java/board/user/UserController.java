@@ -1,4 +1,4 @@
-package board;
+package board.user;
 
 import java.text.DateFormat;
 import java.util.Date;

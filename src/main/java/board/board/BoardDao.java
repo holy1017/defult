@@ -1,4 +1,4 @@
-package board;
+package board.board;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +16,8 @@ public class BoardDao {
 
 	protected Log log = LogFactory.getLog(this.getClass());
 
+	private final String nameSpace="board.board.";
+	
 	// @Autowired
 	@Autowired(required = false) // 필수가 아닌경우 등록 안하게 설정
 	@Qualifier("defultTemplate") // 는 타입으로(by type) 찿아줌. 똑같은 클래스가
@@ -23,50 +25,22 @@ public class BoardDao {
 	// @Resource(name="testDao") //는 이름으로(by name) 찿아줌
 	private SqlSessionTemplate sql;
 
-	public List<UserVO> userList(UserVO vo) {
-		List<UserVO> list = sql.selectList("defult.userList", vo);
-		return list;
-	}
-
 	public List<BoardVO> boardList(Map<String, String> map) {
 		log.debug("boardList");
 		// List<BoardVO> list = sql.selectList("defult.boardList", map);
-		List<BoardVO> list = sql.selectList("defult.boardList", map);
+		List<BoardVO> list = sql.selectList(nameSpace+"List", map);
 		return list;
 	}
 
-	public List<ReplyVO> replyList(ReplyVO vo) {
-		List<ReplyVO> list = sql.selectList("defult.replyList", vo);
-		return list;
-	}
-
-	public int userInsert(UserVO vo) {
-		int result = sql.insert("defult.userInsert", vo);
-		return result;
-	}
 
 	public int boardInsert(BoardVO vo) {
-		int result = sql.insert("defult.boardInsert", vo);
+		int result = sql.insert(nameSpace+"Insert", vo);
 		return result;
 	}
 
-	public int replyInsert(ReplyVO vo) {
-		int result = sql.insert("defult.replyInsert", vo);
-		return result;
-	}
-
-	public int userUpdate(UserVO vo) {
-		int result = sql.update("defult.userUpdate", vo);
-		return result;
-	}
 
 	public int boardUpdate(BoardVO vo) {
-		int result = sql.update("defult.boardUpdate", vo);
-		return result;
-	}
-
-	public int replyUpdate(ReplyVO vo) {
-		int result = sql.update("defult.replyUpdate", vo);
+		int result = sql.update(nameSpace+"Update", vo);
 		return result;
 	}
 
@@ -80,7 +54,7 @@ public class BoardDao {
 		// TODO Auto-generated method stub
 		log.debug("boardListCount");
 
-		int count = sql.selectOne("defult.boardListCount", map);
+		int count = sql.selectOne(nameSpace+"ListCount", map);
 		return count;
 	}
 
@@ -94,7 +68,7 @@ public class BoardDao {
 		// TODO Auto-generated method stub
 		log.debug("boardListCount");
 
-		List<BoardVO> list = sql.selectList("defult.boardListPage", map);
+		List<BoardVO> list = sql.selectList(nameSpace+"ListPage", map);
 		return list;
 	}
 
@@ -106,7 +80,7 @@ public class BoardDao {
 	 */
 	public BoardVO boardDetail(int b_no) {
 		// TODO Auto-generated method stub
-		BoardVO vo = sql.selectOne("defult.boardDetail", b_no);
+		BoardVO vo = sql.selectOne(nameSpace+"Detail", b_no);
 		return vo;
 	}
 
@@ -117,7 +91,7 @@ public class BoardDao {
 	 * @return
 	 */
 	public BoardVO getPrev(int num) {
-		return sql.selectOne("getPrev", num);
+		return sql.selectOne(nameSpace+"getPrev", num);
 	}
 
 	/**
@@ -127,6 +101,6 @@ public class BoardDao {
 	 * @return
 	 */
 	public BoardVO getNext(int num) {
-		return sql.selectOne("getNext", num);
+		return sql.selectOne(nameSpace+"getNext", num);
 	}
 }
