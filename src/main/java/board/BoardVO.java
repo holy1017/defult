@@ -13,7 +13,10 @@ public class BoardVO {
 	private int b_delete;
 	private int u_no;
 	private String u_id;
+	private String u_pw;
 	private String u_nick;
+	private String u_indate;
+	private String u_eddate;
 	private int u_delete;
 	
 
@@ -95,5 +98,29 @@ public class BoardVO {
 
 	public void setU_delete(int u_delete) {
 		this.u_delete = u_delete;
+	}
+
+	public String getU_pw() {
+		return u_pw;
+	}
+
+	public void setU_pw(String u_pw) {
+		this.u_pw = u_pw;
+	}
+
+	public String getU_indate() {
+		return u_indate;
+	}
+
+	public void setU_indate(String u_indate) {
+		this.u_indate = u_indate;
+	}
+
+	public String getU_eddate() {
+		return u_eddate;
+	}
+
+	public void setU_eddate(String u_eddate) {
+		this.u_eddate = u_eddate;
 	}
 }

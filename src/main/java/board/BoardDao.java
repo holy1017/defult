@@ -85,6 +85,20 @@ public class BoardDao {
 	}
 
 	/**
+	 * 목록에 출력할 페이지
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public List<BoardVO> boardListPage(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		log.debug("boardListCount");
+
+		List<BoardVO> list = sql.selectList("defult.boardListPage", map);
+		return list;
+	}
+
+	/**
 	 * 살세글보기
 	 * 
 	 * @param b_no
@@ -96,7 +110,9 @@ public class BoardDao {
 		return vo;
 	}
 
-	/**이전글 정보 반환
+	/**
+	 * 이전글 정보 반환
+	 * 
 	 * @param num
 	 * @return
 	 */
@@ -104,7 +120,9 @@ public class BoardDao {
 		return sql.selectOne("getPrev", num);
 	}
 
-	/**다음글 정보 반환
+	/**
+	 * 다음글 정보 반환
+	 * 
 	 * @param num
 	 * @return
 	 */

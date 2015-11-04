@@ -87,6 +87,41 @@
 		</where>
 		order by b_no desc
 	</select>
+	<!-- 페이지별로 보기 -->
+	<select
+		id="boardListPage"
+		parameterType="hashmap"
+		resultType="BoardVO">
+		select *
+		from (select
+		rownum rnum,
+		bd.*
+		from ( select
+		b_no,
+		b_title,
+<!-- 		b_content, -->
+		b_indate,
+<!-- 		b_eddate, -->
+		b_delete,
+<!-- 		defult_board.u_no, -->
+		u_id,
+<!-- 		u_pw, -->
+		u_nick,
+<!-- 		u_indate, -->
+<!-- 		u_eddate, -->
+		u_delete
+		from defult_user
+		inner join
+		defult_board
+		on (defult_user.u_no =
+		defult_board.u_no)
+		order by b_no
+		desc) bd)
+    <![CDATA[
+         where rnum >= #{startNum}
+           and rnum <= #{endNum}
+         ]]>
+	</select>
 	<!-- 상세글보기 -->
 	<select
 		id="boardDetail"

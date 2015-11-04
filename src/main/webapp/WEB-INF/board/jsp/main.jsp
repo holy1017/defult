@@ -8,7 +8,8 @@
 </head>
 <body>
 	<ul>
-		<li><a href="boardList">글목록</a></li>
+		<li><a href="boardList">글목록 전체보기</a></li>
+		<li><a href="boardListPage">글목록 페이지별 보기</a></li>
 		<li><a href="white">글쓰기</a></li>
 	</ul>
 

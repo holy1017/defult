@@ -6,6 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>boardList.jsp</title>
+
+<link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="themes/icon.css">
+<!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.easyui.min.js"></script>
+
 </head>
 <body>
 	<table>
@@ -38,6 +45,34 @@
 		<tfoot></tfoot>
 	</table>
 
+
+	<div class="easyui-pagination"
+		data-options="
+			pageList: [5,10,25,50,100,250,500,1000,2500,5000,10000],
+			pageNumber:${pageNum },
+			total:${totalRowCount },
+			pageSize:${pageSize },
+			onSelectPage:function(pageNumber, pageSize){
+				$(location).attr(
+						'href',
+						'boardListPage?pageNum=' + pageNumber + '&pageSize='
+								+ pageSize)
+			},
+			buttons:$('#p_buttons')
+			"></div>
+
+
+	<div id="p_buttons">
+		<table>
+			<!-- style="border-spacing: 0" -->
+			<tr>
+				<td><input class="easyui-searchbox" style="width: 150px">
+				</td>
+				<td><a href="javascript:void(0)" class="easyui-linkbutton"
+					data-options="iconCls:'icon-save',plain:true"></a></td>
+			</tr>
+		</table>
+	</div>
 
 	<%@ include file="/debug/debug.jsp"%>
 </body>

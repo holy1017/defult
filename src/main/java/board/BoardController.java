@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
+ * http://localhost:8080/defult/board/
  * Handles requests for the application home page.
  */
 @Controller
@@ -33,6 +34,7 @@ public class BoardController {
 	private BoardService svc;
 
 	/**
+	 * http://localhost:8080/defult/board/
 	 * 기본 경로 테스트
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -51,6 +53,14 @@ public class BoardController {
 		return "main";
 	}
 
+	/**
+	 * http://localhost:8080/defult/board/boardList
+	 * 
+	 * @param model
+	 * @param bvo
+	 * @param pageNum
+	 * @return
+	 */
 	@RequestMapping(value = "/boardList")
 	public String boardList(
 			Model model,
@@ -78,6 +88,37 @@ public class BoardController {
 
 		return "boardList";
 	}
+	@RequestMapping(value = "/boardListPage")
+	public String boardListPage(
+			Model model,
+			@RequestParam(value = "BoardVO", required = false) BoardVO bvo
+			,@RequestParam(value = "pageNum", defaultValue = "1") int pageNum
+			,@RequestParam(value = "pageSize", defaultValue = "10") int pageSize
+			) {
+		
+		log.debug("boardList");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
+		int totalRowCount = svc.boardListCount(map);
+		
+		PageUtil pu = new PageUtil(pageNum, totalRowCount, pageSize, 10);
+		
+		map.put("startNum", String.valueOf(pu.getStartRow()));
+		map.put("endNum", String.valueOf(pu.getEndRow()));
+		
+		List<BoardVO> list = svc.boardListPage(map);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("totalRowCount", totalRowCount);
+		model.addAttribute("startPageNum", pu.getStartPageNum());
+		model.addAttribute("endPageNum", pu.getEndPageNum());
+		model.addAttribute("totalPageCount", pu.getTotalPageCount());
+		model.addAttribute("pageNum", pageNum);
+		
+		return "boardList";
+	}
 
 	@RequestMapping(value = "/boardDetail")
 	public String boardDetail(
@@ -94,9 +135,9 @@ public class BoardController {
 		model.addAttribute("vo", map.get("vo"));
 		model.addAttribute("prev", map.get("prev"));
 		model.addAttribute("next", map.get("next"));
-		
-//		BoardVO vo = svc.boardDetail(b_no);
-//		model.addAttribute("vo", vo);
+
+		// BoardVO vo = svc.boardDetail(b_no);
+		// model.addAttribute("vo", vo);
 
 		return "boardDetail";
 	}
