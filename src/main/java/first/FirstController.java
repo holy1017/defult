@@ -61,4 +61,11 @@ public class FirstController {
 		}
 		return mv;
 	}
+	
+	@RequestMapping(value="/openBoardWrite")
+	public ModelAndView openBoardWrite(CommandMap commandMap) throws Exception{
+	    ModelAndView mv = new ModelAndView("boardWrite");
+	     
+	    return mv;
+	}
 }
