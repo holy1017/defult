@@ -1,5 +1,6 @@
 package first;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import common.utill.ObjectUtils;
 
 @Service("FirstService")
 public class FirstService {
@@ -30,7 +33,7 @@ public class FirstService {
 	public void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		dao.insertBoard(map);
 
-//		파일 들어온거 확인용
+		// 파일 들어온거 확인용
 		fileChack(request);
 
 		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(map, request);
@@ -58,7 +61,20 @@ public class FirstService {
 	public Map<String, Object> selectBoardDetail(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		dao.updateHitCnt(map);
-		Map<String, Object> resultMap = dao.selectBoardDetail(map);
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		// 기존 상세글
+		Map<String, Object> tempMap = dao.selectBoardDetail(map);
+		resultMap.put("map", tempMap);
+
+		// 파일 리스트
+		List<Map<String, Object>> list = dao.selectFileList(map);
+		// log.debug(list);
+		// log.debug(list==null);
+		// log.debug(list.equals(""));
+		if (!ObjectUtils.isEmpty(list))
+			resultMap.put("list", list);
+
 		return resultMap;
 	}
 
