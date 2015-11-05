@@ -32,8 +32,28 @@
 	<%@ include file="../include/include-body.jspf"%>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$("#list").on("click", function(e) { //목록으로 버튼
+				e.preventDefault();
+				fn_openBoardList();
+			});
 
+			$("#write").on("click", function(e) { //작성하기 버튼
+				e.preventDefault();
+				fn_insertBoard();
+			});
 		});
+
+		function fn_openBoardList() {
+			var comSubmit = new ComSubmit();
+			comSubmit.setUrl("<c:url value='openBoardList' />");
+			comSubmit.submit();
+		}
+
+		function fn_insertBoard() {
+			var comSubmit = new ComSubmit("frm");
+			comSubmit.setUrl("<c:url value='insertBoard' />");
+			comSubmit.submit();
+		}
 	</script>
 </body>
 </html>

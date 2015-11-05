@@ -27,7 +27,7 @@ public class FirstController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/openSampleBoardList")
+	@RequestMapping(value = "/openBoardList")
 	public ModelAndView openSampleBoardList(Map<String, Object> commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("boardList");
 
@@ -66,6 +66,43 @@ public class FirstController {
 	public ModelAndView openBoardWrite(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("boardWrite");
 	     
+	    return mv;
+	}
+	@RequestMapping(value="/insertBoard")
+	public ModelAndView insertBoard(CommandMap commandMap) throws Exception{
+	    ModelAndView mv = new ModelAndView("redirect:openBoardList");
+	     
+	    service.insertBoard(commandMap.getMap());
+	     
+	    return mv;
+	}
+	@RequestMapping(value="/openBoardDetail")
+	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception{
+	    ModelAndView mv = new ModelAndView("boardDetail");
+	     
+	    Map<String,Object> map = service.selectBoardDetail(commandMap.getMap());
+	    mv.addObject("map", map);
+	     
+	    return mv;
+	}
+	
+	@RequestMapping(value="/openBoardUpdate")
+	public ModelAndView openBoardUpdate(CommandMap commandMap) throws Exception{
+	    ModelAndView mv = new ModelAndView("boardUpdate");
+	     
+	    Map<String,Object> map = service.selectBoardDetail(commandMap.getMap());
+	    mv.addObject("map", map);
+	     
+	    return mv;
+	}
+	 
+	@RequestMapping(value="/updateBoard")
+	public ModelAndView updateBoard(CommandMap commandMap) throws Exception{
+	    ModelAndView mv = new ModelAndView("redirect:openBoardDetail");
+	     
+	    service.updateBoard(commandMap.getMap());
+	     
+	    mv.addObject("IDX", commandMap.get("IDX"));
 	    return mv;
 	}
 }
