@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	참고한 자료 http://gangzzang.tistory.com/125
+	${test }
 	<%@ include file="/debug/debug.jsp"%>
 </body>
 </html>
