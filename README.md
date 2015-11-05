@@ -25,6 +25,10 @@
     * /WEB-INF/board/jsp/
     * component-scan base-package="board"
 
+## === 151105 ===
+
+파일 업로드 브런치 생성
+
 ##  === 문법 테스트 ===
 
 # The largest heading (an <h1>ㅅㄷㄴㅅ</h1> tag)
