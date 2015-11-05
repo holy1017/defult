@@ -24,13 +24,18 @@ public class FirstService {
 		dao.insertBoard(map);
 	}
 
-	public Map<String, Object> selectBoardDetail(Map<String, Object> map)throws Exception {
+	public Map<String, Object> selectBoardDetail(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		dao.updateHitCnt(map);
 		Map<String, Object> resultMap = dao.selectBoardDetail(map);
 		return resultMap;
 	}
-	public void updateBoard(Map<String, Object> map) throws Exception{
+
+	public void updateBoard(Map<String, Object> map) throws Exception {
 		dao.updateBoard(map);
+	}
+
+	public void deleteBoard(Map<String, Object> map) throws Exception {
+		dao.deleteBoard(map);
 	}
 }

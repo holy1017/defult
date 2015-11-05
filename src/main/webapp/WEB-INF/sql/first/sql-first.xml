@@ -75,8 +75,10 @@
 	            IDX = #{IDX}        
 	    ]]>
 	</select>
-	
-	<update id="updateBoard" parameterType="hashmap">
+
+	<update
+		id="updateBoard"
+		parameterType="hashmap">
     <![CDATA[
         UPDATE TB_BOARD 
         SET
@@ -85,5 +87,16 @@
         WHERE
             IDX = #{IDX}    
     ]]>
-</update>
+	</update>
+	<update
+		id="deleteBoard"
+		parameterType="hashmap">
+    <![CDATA[
+        UPDATE TB_BOARD
+        SET
+            DEL_GB = 'Y'
+        WHERE
+            IDX = #{IDX}
+    ]]>
+	</update>
 </mapper>
