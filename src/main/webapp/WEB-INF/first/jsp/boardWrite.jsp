@@ -24,8 +24,8 @@
 				</tr>
 			</tbody>
 		</table>
-		<input type="file" name="file"> <br />
-		<br /> <a href="#this" class="btn" id="write">작성하기</a> <a href="#this"
+		<input type="file" name="file"> <br /> <br /> <a
+			href="#this" class="btn" id="write">작성하기</a> <a href="#this"
 			class="btn" id="list">목록으로</a>
 	</form>
 
