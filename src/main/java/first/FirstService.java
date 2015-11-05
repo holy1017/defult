@@ -17,6 +17,9 @@ public class FirstService {
 
 	Logger log = Logger.getLogger(this.getClass());
 
+	@Resource(name = "fileUtils")
+	private FileUtils fileUtils;
+
 	@Resource(name = "FirstDAO")
 	private FirstDAO dao;
 
@@ -27,6 +30,16 @@ public class FirstService {
 	public void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		dao.insertBoard(map);
 
+//		파일 들어온거 확인용
+		fileChack(request);
+
+		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(map, request);
+		for (int i = 0, size = list.size(); i < size; i++) {
+			dao.insertFile(list.get(i));
+		}
+	}
+
+	private void fileChack(HttpServletRequest request) {
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
 		MultipartFile multipartFile = null;
