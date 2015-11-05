@@ -9,7 +9,7 @@ import java.util.Map;
  * @author Administrator
  *
  */
-public class ObjectUtils {
+public class UtilsEmpty {
 	/**
 	 * 내용이 없을경우 트루 반환
 	 * 

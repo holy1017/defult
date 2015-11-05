@@ -63,5 +63,6 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="first" />
+	<context:component-scan base-package="common" />
 
 </beans:beans>

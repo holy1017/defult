@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import common.utill.ObjectUtils;
+import common.utill.UtilsEmpty;
 
 @Controller
 public class FirstController {
@@ -89,9 +89,9 @@ public class FirstController {
 		mv.addObject("map", map.get("map"));// 기존 상세글
 		// log.debug(map.get("list")==null);
 		// log.debug(map.get("list").equals(""));
-		log.debug(ObjectUtils.isEmpty(map.get("list")));
+		log.debug(UtilsEmpty.isEmpty(map.get("list")));
 
-		if (!ObjectUtils.isEmpty(map.get("list")))
+		if (!UtilsEmpty.isEmpty(map.get("list")))
 			mv.addObject("list", map.get("list"));// 첨부파일 목록
 
 		return mv;

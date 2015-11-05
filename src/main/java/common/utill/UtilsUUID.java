@@ -1,8 +1,8 @@
-package first;
+package common.utill;
 
 import java.util.UUID;
 
-public class CommonUtils {
+public class UtilsUUID {
 
 	public static String getRandomString() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
@@ -19,9 +19,9 @@ public class CommonUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(CommonUtils.getRandomString());
-		System.out.println(CommonUtils.getRandomString());
-		System.out.println(CommonUtils.getRandomString());
+		System.out.println(UtilsUUID.getRandomString());
+		System.out.println(UtilsUUID.getRandomString());
+		System.out.println(UtilsUUID.getRandomString());
 
 	}
 }

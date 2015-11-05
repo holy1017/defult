@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import common.utill.PageUtil;
+import common.utill.UtilsPage;
 
 /**
  * http://localhost:8080/defult/board/
@@ -76,7 +76,7 @@ public class BoardController {
 
 		int totalRowCount = svc.boardListCount(map);
 
-		PageUtil pu = new PageUtil(pageNum, totalRowCount, 10, 10);
+		UtilsPage pu = new UtilsPage(pageNum, totalRowCount, 10, 10);
 
 		map.put("startNum", String.valueOf(pu.getStartRow()));
 		map.put("endNum", String.valueOf(pu.getEndRow()));
@@ -109,7 +109,7 @@ public class BoardController {
 
 		int totalRowCount = svc.boardListCount(map);
 		
-		PageUtil pu = new PageUtil(pageNum, totalRowCount, pageSize, 10);
+		UtilsPage pu = new UtilsPage(pageNum, totalRowCount, pageSize, 10);
 		
 		map.put("startNum", String.valueOf(pu.getStartRow()));
 		map.put("endNum", String.valueOf(pu.getEndRow()));

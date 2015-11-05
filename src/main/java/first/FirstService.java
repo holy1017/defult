@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import common.utill.ObjectUtils;
+import common.utill.UtilsFile;
+import common.utill.UtilsEmpty;
 
 @Service("FirstService")
 public class FirstService {
@@ -21,7 +22,7 @@ public class FirstService {
 	Logger log = Logger.getLogger(this.getClass());
 
 	@Resource(name = "fileUtils")
-	private FileUtils fileUtils;
+	private UtilsFile fileUtils;
 
 	@Resource(name = "FirstDAO")
 	private FirstDAO dao;
@@ -72,7 +73,7 @@ public class FirstService {
 		// log.debug(list);
 		// log.debug(list==null);
 		// log.debug(list.equals(""));
-		if (!ObjectUtils.isEmpty(list))
+		if (!UtilsEmpty.isEmpty(list))
 			resultMap.put("list", list);
 
 		return resultMap;
