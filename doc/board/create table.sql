@@ -102,3 +102,22 @@ ALTER TABLE defult_reply
 	ADD (CONSTRAINT R_7 FOREIGN KEY (b_no) REFERENCES defult_board (b_no));
 
 
+CREATE TABLE defult_file
+(
+	b_no                 INTEGER NOT NULL ,
+	f_no                 INTEGER NOT NULL ,
+	f_onm                VARCHAR2(260) NOT NULL ,
+	f_rnm                VARCHAR2(100) NOT NULL ,
+	f_sz                 INTEGER NOT NULL ,
+	f_indate             DATE DEFAULT  sysdate  NOT NULL ,
+	f_delete             NUMBER(1) DEFAULT  0  NOT NULL 
+);
+
+CREATE UNIQUE INDEX XPK게시판_파일 ON defult_file
+(f_no   ASC);
+
+ALTER TABLE defult_file
+	ADD CONSTRAINT  XPK게시판_파일 PRIMARY KEY (f_no);
+  
+  ALTER TABLE defult_file
+	ADD (CONSTRAINT R_8 FOREIGN KEY (b_no) REFERENCES defult_board (b_no));
