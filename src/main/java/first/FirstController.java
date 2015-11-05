@@ -1,7 +1,9 @@
 package first;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -32,6 +34,31 @@ public class FirstController {
 		List<Map<String, Object>> list = service.selectBoardList(commandMap);
 		mv.addObject("list", list);
 
+		return mv;
+	}
+
+	/**
+	 * http://localhost:8080/defult/first/testMapArgumentResolver?aaa=value1&bbb
+	 * =value2
+	 * 
+	 * @param commandMap
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/testMapArgumentResolver")
+	public ModelAndView testMapArgumentResolver(CommandMap commandMap) throws Exception {
+		log.debug("testMapArgumentResolver");
+
+		ModelAndView mv = new ModelAndView("");
+
+		if (commandMap.isEmpty() == false) {
+			Iterator<Entry<String, Object>> iterator = commandMap.getMap().entrySet().iterator();
+			Entry<String, Object> entry = null;
+			while (iterator.hasNext()) {
+				entry = iterator.next();
+				log.debug("key : " + entry.getKey() + ", value : " + entry.getValue());
+			}
+		}
 		return mv;
 	}
 }

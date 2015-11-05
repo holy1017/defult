@@ -11,7 +11,13 @@
 		infrastructure -->
 
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+<!-- 	<annotation-driven /> -->
+
+   <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <beans:bean class="first.CustomMapArgumentResolver"></beans:bean>       
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
 
 	<!-- 로거 출력용 -->
 	<mvc:interceptors>
