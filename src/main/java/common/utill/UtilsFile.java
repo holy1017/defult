@@ -18,11 +18,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+/**
+ * @author Administrator
+ * 파일 저장및 읽기 구현
+ * http://addio3305.tistory.com/84 참고자료
+ * 참고로 커먼에 있던 기능을 여기로 옮김.
+ */
 @Component("fileUtils")
 public class UtilsFile {
 	
 	private static final String filePath = "d:\\file\\";
 
+	/**
+	 * 파일 업로드 기능
+	 * @param map
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	public static List<Map<String, Object>> parseInsertFileInfo(Map<String, Object> map, HttpServletRequest request)
 			throws Exception {
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
@@ -64,6 +77,14 @@ public class UtilsFile {
 		return list;
 	}
 	
+	/**
+	 * 파일 다운로드 기능
+	 * @param response
+	 * @param storedFileName
+	 * @param originalFileName
+	 * @throws IOException
+	 * @throws UnsupportedEncodingException
+	 */
 	public static void readFile(HttpServletResponse response, String storedFileName, String originalFileName)
 			throws IOException, UnsupportedEncodingException {
 		byte fileByte[] = FileUtils.readFileToByteArray(new File(filePath + storedFileName));
