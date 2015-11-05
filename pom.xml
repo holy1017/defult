@@ -101,6 +101,7 @@
 		</dependency>
 
 		<!-- MultipartHttpServletRequset -->
+		<!-- 파일 업로드용 -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>

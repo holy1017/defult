@@ -34,4 +34,13 @@ public class FirstDAO extends AbstractDAO {
 	public void deleteBoard(Map<String, Object> map) throws Exception {
 		update("First.deleteBoard", map);
 	}
+
+	public void insertFile(Map<String, Object> map) throws Exception{
+	    insert("First.insertFile", map);
+	}
+
+	//@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectFileList(Map<String, Object> map) throws Exception{
+	    return (List<Map<String, Object>>)selectList("First.selectFileList", map);
+	}
 }

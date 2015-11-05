@@ -1,17 +1,28 @@
 package first;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import common.utill.UtilsFile;
+import common.utill.UtilsEmpty;
 
 @Service("FirstService")
 public class FirstService {
 
 	Logger log = Logger.getLogger(this.getClass());
+
+	@Resource(name = "fileUtils")
+	private UtilsFile fileUtils;
 
 	@Resource(name = "FirstDAO")
 	private FirstDAO dao;
@@ -20,14 +31,51 @@ public class FirstService {
 		return dao.selectBoardList(map);
 	}
 
-	public void insertBoard(Map<String, Object> map) throws Exception {
+	public void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		dao.insertBoard(map);
+
+		// 파일 들어온거 확인용
+		fileChack(request);
+
+		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(map, request);
+		for (int i = 0, size = list.size(); i < size; i++) {
+			dao.insertFile(list.get(i));
+		}
+	}
+
+	private void fileChack(HttpServletRequest request) {
+		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+		MultipartFile multipartFile = null;
+		while (iterator.hasNext()) {
+			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+			if (multipartFile.isEmpty() == false) {
+				log.debug("------------- file start -------------");
+				log.debug("name : " + multipartFile.getName());
+				log.debug("filename : " + multipartFile.getOriginalFilename());
+				log.debug("size : " + multipartFile.getSize());
+				log.debug("-------------- file end --------------\n");
+			}
+		}
 	}
 
 	public Map<String, Object> selectBoardDetail(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		dao.updateHitCnt(map);
-		Map<String, Object> resultMap = dao.selectBoardDetail(map);
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		// 기존 상세글
+		Map<String, Object> tempMap = dao.selectBoardDetail(map);
+		resultMap.put("map", tempMap);
+
+		// 파일 리스트
+		List<Map<String, Object>> list = dao.selectFileList(map);
+		// log.debug(list);
+		// log.debug(list==null);
+		// log.debug(list.equals(""));
+		if (!UtilsEmpty.isEmpty(list))
+			resultMap.put("list", list);
+
 		return resultMap;
 	}
 

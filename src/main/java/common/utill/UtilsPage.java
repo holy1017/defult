@@ -2,7 +2,7 @@ package common.utill;
 
 import org.springframework.ui.Model;
 
-public class PageUtil {
+public class UtilsPage {
 	
 	private int totalRowCount; // 전체글의 갯수
 	private int pageNum; // 현재 페이지 번호
@@ -14,7 +14,7 @@ public class PageUtil {
 	private int rowBlockCount; // 보여줄 글의 행갯수
 	private int pageBlockCount; // 한페이지에 보여줄 페이지 갯수
 
-	public PageUtil() {
+	public UtilsPage() {
 		// TODO Auto-generated constructor stub
 	}
 	/**
@@ -29,7 +29,7 @@ public class PageUtil {
 	 *            한페이지에 보여줄 페이지의 갯수
 	 * @param model
 	 */
-	public PageUtil(int pageNum, int totalRowCount, int rowBlockCount, int pageBlockCount,Model model) {
+	public UtilsPage(int pageNum, int totalRowCount, int rowBlockCount, int pageBlockCount,Model model) {
 		// TODO Auto-generated constructor stub
 		this(pageNum, totalRowCount, rowBlockCount, pageBlockCount);
 		model.addAttribute("totalRowCount", totalRowCount);
@@ -54,7 +54,7 @@ public class PageUtil {
 	 * @param pageBlockCount
 	 *            한페이지에 보여줄 페이지의 갯수
 	 */
-	public PageUtil(int pageNum, int totalRowCount, int rowBlockCount, int pageBlockCount) {
+	public UtilsPage(int pageNum, int totalRowCount, int rowBlockCount, int pageBlockCount) {
 		this.pageNum = pageNum;
 		this.totalRowCount = totalRowCount;
 		this.rowBlockCount = rowBlockCount;

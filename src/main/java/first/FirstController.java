@@ -6,11 +6,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import common.utill.UtilsEmpty;
 
 @Controller
 public class FirstController {
@@ -61,57 +64,65 @@ public class FirstController {
 		}
 		return mv;
 	}
-	
-	@RequestMapping(value="/openBoardWrite")
-	public ModelAndView openBoardWrite(CommandMap commandMap) throws Exception{
-	    ModelAndView mv = new ModelAndView("boardWrite");
-	     
-	    return mv;
+
+	@RequestMapping(value = "/openBoardWrite")
+	public ModelAndView openBoardWrite(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("boardWrite");
+
+		return mv;
 	}
-	@RequestMapping(value="/insertBoard")
-	public ModelAndView insertBoard(CommandMap commandMap) throws Exception{
-	    ModelAndView mv = new ModelAndView("redirect:openBoardList");
-	     
-	    service.insertBoard(commandMap.getMap());
-	     
-	    return mv;
+
+	@RequestMapping(value = "/insertBoard")
+	public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:openBoardList");
+
+		service.insertBoard(commandMap.getMap(), request);
+
+		return mv;
 	}
-	@RequestMapping(value="/openBoardDetail")
-	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception{
-	    ModelAndView mv = new ModelAndView("boardDetail");
-	     
-	    Map<String,Object> map = service.selectBoardDetail(commandMap.getMap());
-	    mv.addObject("map", map);
-	     
-	    return mv;
+
+	@RequestMapping(value = "/openBoardDetail")
+	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("boardDetail");
+
+		Map<String, Object> map = service.selectBoardDetail(commandMap.getMap());
+		mv.addObject("map", map.get("map"));// 기존 상세글
+		// log.debug(map.get("list")==null);
+		// log.debug(map.get("list").equals(""));
+		log.debug(UtilsEmpty.isEmpty(map.get("list")));
+
+		if (!UtilsEmpty.isEmpty(map.get("list")))
+			mv.addObject("list", map.get("list"));// 첨부파일 목록
+
+		return mv;
 	}
-	
-	@RequestMapping(value="/openBoardUpdate")
-	public ModelAndView openBoardUpdate(CommandMap commandMap) throws Exception{
-	    ModelAndView mv = new ModelAndView("boardUpdate");
-	     
-	    Map<String,Object> map = service.selectBoardDetail(commandMap.getMap());
-	    mv.addObject("map", map);
-	     
-	    return mv;
+
+	@RequestMapping(value = "/openBoardUpdate")
+	public ModelAndView openBoardUpdate(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("boardUpdate");
+
+		Map<String, Object> map = service.selectBoardDetail(commandMap.getMap());
+		mv.addObject("map", map);
+
+		return mv;
 	}
-	 
-	@RequestMapping(value="/updateBoard")
-	public ModelAndView updateBoard(CommandMap commandMap) throws Exception{
-	    ModelAndView mv = new ModelAndView("redirect:openBoardDetail");
-	     
-	    service.updateBoard(commandMap.getMap());
-	     
-	    mv.addObject("IDX", commandMap.get("IDX"));
-	    return mv;
+
+	@RequestMapping(value = "/updateBoard")
+	public ModelAndView updateBoard(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:openBoardDetail");
+
+		service.updateBoard(commandMap.getMap());
+
+		mv.addObject("IDX", commandMap.get("IDX"));
+		return mv;
 	}
-	
-	@RequestMapping(value="/deleteBoard")
-	public ModelAndView deleteBoard(CommandMap commandMap) throws Exception{
-	    ModelAndView mv = new ModelAndView("redirect:openBoardList");
-	     
-	    service.deleteBoard(commandMap.getMap());
-	     
-	    return mv;
+
+	@RequestMapping(value = "/deleteBoard")
+	public ModelAndView deleteBoard(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:openBoardList");
+
+		service.deleteBoard(commandMap.getMap());
+
+		return mv;
 	}
 }
