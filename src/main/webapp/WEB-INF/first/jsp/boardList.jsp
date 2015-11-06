@@ -3,7 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="../include/include-header.jspf" %>
+<%@ include file="../include/include-header.jspf"%>
+<c:if test="${ csrfError!=null}">
+	<c:remove var="csrfError" />
+</c:if>
+<c:if test="${ msg!=null}">
+	<script type="text/javascript">
+		alert("${msg}")
+	</script>
+</c:if>
 </head>
 <body>
 	<h2>게시판 목록</h2>
@@ -73,5 +81,7 @@
 			comSubmit.submit();
 		}
 	</script>
+
+	<%@ include file="/debug/debug.jsp"%>
 </body>
 </html>
