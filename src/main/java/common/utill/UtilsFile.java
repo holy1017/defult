@@ -40,7 +40,7 @@ public class UtilsFile {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Map<String, Object>> parseInsertFileInfo(Map<String, Object> map, HttpServletRequest request)
+	public Map<String, List<Map<String, Object>>> parseInsertFileInfo(Map<String, Object> map, HttpServletRequest request)
 			throws Exception {
 		return parseInsertFileInfo(map, request, 0);
 	}
@@ -55,7 +55,7 @@ public class UtilsFile {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Map<String, Object>> parseInsertFileInfo(
+	public Map<String,List<Map<String, Object>>> parseInsertFileInfo(
 			Map<String, Object> map,
 			HttpServletRequest request,
 			long fileMaxSize)
@@ -69,6 +69,7 @@ public class UtilsFile {
 		String storedFileName = null;
 
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> listFail = new ArrayList<Map<String, Object>>();
 		Map<String, Object> listMap = null;
 
 		String boardIdx = (String) map.get("IDX");
@@ -84,15 +85,18 @@ public class UtilsFile {
 
 			if (multipartFile.isEmpty() == false) {
 
+				log.debug("FILE_SIZE:"+multipartFile.getSize());
+				originalFileName = multipartFile.getOriginalFilename();
+				
 				if (fileMaxSize == 0 || multipartFile.getSize() < fileMaxSize) {
 
-					originalFileName = multipartFile.getOriginalFilename();
 					originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 					storedFileName = UtilsUUID.getRandomString() + originalFileExtension;
 
 					file = new File(filePath + storedFileName);
 					multipartFile.transferTo(file);
 
+					//업로드 성공 리스트 작성
 					listMap = new HashMap<String, Object>();
 					listMap.put("BOARD_IDX", boardIdx);
 					listMap.put("ORIGINAL_FILE_NAME", originalFileName);
@@ -100,11 +104,18 @@ public class UtilsFile {
 					listMap.put("FILE_SIZE", multipartFile.getSize());
 					list.add(listMap);
 				}else{
-					log.debug("FILE_SIZE:"+multipartFile.getSize());
+					//업로드 실패 리스트 작성
+					listMap = new HashMap<String, Object>();
+					listMap.put("ORIGINAL_FILE_NAME", originalFileName);
+					listMap.put("FILE_SIZE", multipartFile.getSize());
+					listFail.add(listMap);
 				}
 			}
 		}
-		return list;
+		Map<String, List<Map<String, Object>>> mapReturn=new HashMap<String, List<Map<String, Object>>>();
+		mapReturn.put("list", list);
+		mapReturn.put("listFail", listFail);
+		return mapReturn;
 	}
 
 	/**

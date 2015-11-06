@@ -94,12 +94,19 @@ public class FirstController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/insertBoard", method = RequestMethod.POST)
-	public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("redirect:openBoardList");
+	public String insertBoard(CommandMap commandMap, HttpServletRequest request,RedirectAttributes redirect) throws Exception {
+		//ModelAndView mv = new ModelAndView("redirect:openBoardList");
 
-		service.insertBoard(commandMap.getMap(), request);
-
-		return mv;
+		List<Map<String, Object>> faillist=service.insertBoard(commandMap.getMap(), request);
+		
+		log.debug("UtilsEmpty.isEmpty(faillist)"+UtilsEmpty.isEmpty(faillist));
+		log.debug("faillist:"+faillist);
+		if (!UtilsEmpty.isEmpty(faillist)) {
+			//mv.addObject("failList", faillist);
+			redirect.addFlashAttribute("msg", faillist);
+		}		
+		
+		return "redirect:openBoardList";
 	}
 
 	@RequestMapping(value = "/openBoardDetail")
