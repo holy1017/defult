@@ -34,7 +34,9 @@ public class FirstController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/openBoardList")
+	@RequestMapping(value = {
+			"/openBoardList", "/"
+	})
 	public ModelAndView openBoardList(Map<String, Object> commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("boardList");
 
@@ -100,15 +102,6 @@ public class FirstController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/insertBoard")
-	public String insertBoardNotPost(CommandMap commandMap, HttpServletRequest request,RedirectAttributes redirect) throws Exception {
-//		request.setAttribute("msg", "잘못된 요청 방법 입니다.");//리다이랙트로는 안넘어감
-		redirect.addFlashAttribute("msg", "잘못된 요청 방법 입니다.");
-//		redirect.addFlashAttribute("param1", "나의파람");
-//		redirect.addFlashAttribute("param2", "나의파람2");
-		return "redirect:openBoardList";
-	}
-
 	@RequestMapping(value = "/openBoardDetail")
 	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("boardDetail");
@@ -127,15 +120,18 @@ public class FirstController {
 
 	@RequestMapping(value = "/openBoardUpdate")
 	public ModelAndView openBoardUpdate(CommandMap commandMap) throws Exception {
+		log.debug("openBoardUpdate");
 		ModelAndView mv = new ModelAndView("boardUpdate");
 
 		Map<String, Object> map = service.selectBoardDetail(commandMap.getMap());
-		mv.addObject("map", map);
+		mv.addObject("map", map.get("map"));
+		if (!UtilsEmpty.isEmpty(map.get("list")))
+			mv.addObject("list", map.get("list"));
 
 		return mv;
 	}
 
-	@RequestMapping(value = "/updateBoard")
+	@RequestMapping(value = "/updateBoard", method = RequestMethod.POST)
 	public ModelAndView updateBoard(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:openBoardDetail");
 
@@ -145,12 +141,24 @@ public class FirstController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/deleteBoard")
+	@RequestMapping(value = "/deleteBoard", method = RequestMethod.POST)
 	public ModelAndView deleteBoard(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:openBoardList");
 
 		service.deleteBoard(commandMap.getMap());
 
 		return mv;
+	}
+
+	@RequestMapping(value = {
+			"/insertBoard", "/updateBoard", "/deleteBoard"
+	})
+	public String BoardNotPost(CommandMap commandMap, HttpServletRequest request, RedirectAttributes redirect)
+			throws Exception {
+		// request.setAttribute("msg", "잘못된 요청 방법 입니다.");//리다이랙트로는 안넘어감
+		redirect.addFlashAttribute("msg", "잘못된 요청 방법 입니다.");
+		// redirect.addFlashAttribute("param1", "나의파람");
+		// redirect.addFlashAttribute("param2", "나의파람2");
+		return "redirect:openBoardList";
 	}
 }

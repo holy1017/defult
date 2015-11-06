@@ -87,5 +87,6 @@
 
 		}
 	</script>
+	<%@ include file="/debug/debug.jsp"%>
 </body>
 </html>
