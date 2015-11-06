@@ -14,30 +14,52 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  * @author Administrator
- * 파일 저장및 읽기 구현
- * http://addio3305.tistory.com/84 참고자료
- * 참고로 커먼에 있던 기능을 여기로 옮김.
+ *         파일 저장및 읽기 구현
+ *         http://addio3305.tistory.com/84 참고자료
+ *         참고로 커먼에 있던 기능을 여기로 옮김.
  */
 @Component("fileUtils")
 public class UtilsFile {
-	
-	private static final String filePath = "d:\\file\\";
+
+	Logger log = Logger.getLogger(this.getClass());
+
+	private String filePath = "d:\\file\\";
 
 	/**
 	 * 파일 업로드 기능
+	 * 
 	 * @param map
 	 * @param request
 	 * @return
 	 * @throws Exception
 	 */
-	public static List<Map<String, Object>> parseInsertFileInfo(Map<String, Object> map, HttpServletRequest request)
+	public List<Map<String, Object>> parseInsertFileInfo(Map<String, Object> map, HttpServletRequest request)
 			throws Exception {
+		return parseInsertFileInfo(map, request, 0);
+	}
+
+	/**
+	 * 파일 업로드 기능
+	 * 
+	 * @param map
+	 * @param request
+	 * @param fileMaxSize
+	 *            최대 크기 사이즈. 단위: 바이트. 기본값 :0=무한대
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, Object>> parseInsertFileInfo(
+			Map<String, Object> map,
+			HttpServletRequest request,
+			long fileMaxSize)
+					throws Exception {
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
 
@@ -57,35 +79,44 @@ public class UtilsFile {
 		}
 
 		while (iterator.hasNext()) {
+
 			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+
 			if (multipartFile.isEmpty() == false) {
-				originalFileName = multipartFile.getOriginalFilename();
-				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-				storedFileName = UtilsUUID.getRandomString() + originalFileExtension;
 
-				file = new File(filePath + storedFileName);
-				multipartFile.transferTo(file);
+				if (fileMaxSize == 0 || multipartFile.getSize() < fileMaxSize) {
 
-				listMap = new HashMap<String, Object>();
-				listMap.put("BOARD_IDX", boardIdx);
-				listMap.put("ORIGINAL_FILE_NAME", originalFileName);
-				listMap.put("STORED_FILE_NAME", storedFileName);
-				listMap.put("FILE_SIZE", multipartFile.getSize());
-				list.add(listMap);
+					originalFileName = multipartFile.getOriginalFilename();
+					originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+					storedFileName = UtilsUUID.getRandomString() + originalFileExtension;
+
+					file = new File(filePath + storedFileName);
+					multipartFile.transferTo(file);
+
+					listMap = new HashMap<String, Object>();
+					listMap.put("BOARD_IDX", boardIdx);
+					listMap.put("ORIGINAL_FILE_NAME", originalFileName);
+					listMap.put("STORED_FILE_NAME", storedFileName);
+					listMap.put("FILE_SIZE", multipartFile.getSize());
+					list.add(listMap);
+				}else{
+					log.debug("FILE_SIZE:"+multipartFile.getSize());
+				}
 			}
 		}
 		return list;
 	}
-	
+
 	/**
 	 * 파일 다운로드 기능
+	 * 
 	 * @param response
 	 * @param storedFileName
 	 * @param originalFileName
 	 * @throws IOException
 	 * @throws UnsupportedEncodingException
 	 */
-	public static void readFile(HttpServletResponse response, String storedFileName, String originalFileName)
+	public void readFile(HttpServletResponse response, String storedFileName, String originalFileName)
 			throws IOException, UnsupportedEncodingException {
 		byte fileByte[] = FileUtils.readFileToByteArray(new File(filePath + storedFileName));
 
@@ -98,5 +129,21 @@ public class UtilsFile {
 
 		response.getOutputStream().flush();
 		response.getOutputStream().close();
+	}
+
+	public void fileChack(HttpServletRequest request) {
+		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+		MultipartFile multipartFile = null;
+		while (iterator.hasNext()) {
+			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+			if (multipartFile.isEmpty() == false) {
+				log.debug("------------- file start -------------");
+				log.debug("name : " + multipartFile.getName());
+				log.debug("filename : " + multipartFile.getOriginalFilename());
+				log.debug("size : " + multipartFile.getSize());
+				log.debug("-------------- file end --------------");
+			}
+		}
 	}
 }

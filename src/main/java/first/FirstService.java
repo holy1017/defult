@@ -35,29 +35,15 @@ public class FirstService {
 		dao.insertBoard(map);
 
 		// 파일 들어온거 확인용
-		fileChack(request);
+		fileUtils.fileChack(request);
 
-		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(map, request);
+		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(map, request,1024*50);
 		for (int i = 0, size = list.size(); i < size; i++) {
 			dao.insertFile(list.get(i));
 		}
 	}
 
-	private void fileChack(HttpServletRequest request) {
-		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		MultipartFile multipartFile = null;
-		while (iterator.hasNext()) {
-			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-			if (multipartFile.isEmpty() == false) {
-				log.debug("------------- file start -------------");
-				log.debug("name : " + multipartFile.getName());
-				log.debug("filename : " + multipartFile.getOriginalFilename());
-				log.debug("size : " + multipartFile.getSize());
-				log.debug("-------------- file end --------------\n");
-			}
-		}
-	}
+
 
 	public Map<String, Object> selectBoardDetail(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
