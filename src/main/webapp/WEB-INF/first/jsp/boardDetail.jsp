@@ -8,10 +8,10 @@
 <body>
 	<table class="board_view">
 		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>
+			<col width="15%" />
+			<col width="35%" />
+			<col width="15%" />
+			<col width="35%" />
 		</colgroup>
 		<caption>게시글 상세</caption>
 		<tbody>
@@ -36,15 +36,13 @@
 			</tr>
 			<tr>
 				<th scope="row">첨부파일</th>
-				<td colspan="3">				
-					<c:forEach var="row" items="${list }">
+				<td colspan="3"><c:forEach var="row" items="${list }">
 						<p>
-							<input type="hidden" id="IDX" value="${row.IDX }">
-							<a href="#this" name="file">${row.ORIGINAL_FILE_NAME }</a> 
+							<input type="hidden" id="IDX" value="${row.IDX }"> <a
+								href="#this" name="file">${row.ORIGINAL_FILE_NAME }</a>
 							(${row.FILE_SIZE }kb)
 						</p>
-					</c:forEach>
-				</td>
+					</c:forEach></td>
 			</tr>
 		</tbody>
 	</table>
@@ -85,13 +83,28 @@
 			comSubmit.addParam("IDX", idx);
 			comSubmit.submit();
 		}
-		function fn_downloadFile(obj){
+		function fn_downloadFile(obj) {
 			var idx = obj.parent().find("#IDX").val();
 			var comSubmit = new ComSubmit();
 			comSubmit.setUrl("<c:url value='common/downloadFile' />");
-			comSubmit.reset()
 			comSubmit.addParam("IDX", idx);
 			comSubmit.submit();
+			comSubmit.reset()
+		}
+		function fn_addFile() {
+			var str = "<p>" + "<input type='file' id='file_" + (gfv_count)
+					+ "' name='file_" + (gfv_count) + "'>"
+					+ "<a href='#this' class='btn' id='delete_" + (gfv_count)
+					+ "' name='delete_" + (gfv_count) + "'>삭제</a>" + "</p>";
+			$("#fileDiv").append(str);
+			$("#delete_" + (gfv_count++)).on("click", function(e) { //삭제 버튼
+				e.preventDefault();
+				fn_deleteFile($(this));
+			});
+		}
+
+		function fn_deleteFile(obj) {
+			obj.parent().remove();
 		}
 	</script>
 	<%@ include file="/debug/debug.jsp"%>

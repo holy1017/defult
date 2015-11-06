@@ -127,7 +127,9 @@ public class FirstController {
 
 	@RequestMapping(value = "/openBoardUpdate")
 	public ModelAndView openBoardUpdate(CommandMap commandMap) throws Exception {
+		
 		log.debug("openBoardUpdate");
+		
 		ModelAndView mv = new ModelAndView("boardUpdate");
 
 		Map<String, Object> map = service.selectBoardDetail(commandMap.getMap());
