@@ -7,13 +7,17 @@ import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import common.utill.UtilsEmpty;
+import common.utill.UtilsUUID;
 
 @Controller
 public class FirstController {
@@ -31,7 +35,7 @@ public class FirstController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/openBoardList")
-	public ModelAndView openSampleBoardList(Map<String, Object> commandMap) throws Exception {
+	public ModelAndView openBoardList(Map<String, Object> commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("boardList");
 
 		List<Map<String, Object>> list = service.selectBoardList(commandMap);
@@ -66,19 +70,43 @@ public class FirstController {
 	}
 
 	@RequestMapping(value = "/openBoardWrite")
-	public ModelAndView openBoardWrite(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("boardWrite");
+	public String openBoardWrite(CommandMap commandMap, HttpSession session) throws Exception {
+		log.debug("openBoardWrite");
 
-		return mv;
+		session.setAttribute("CSRF_TOKEN", UtilsUUID.getRandomString());
+		log.debug("CSRF_TOKEN:" + session.getAttribute("CSRF_TOKEN"));
+
+		return "boardWrite";
+		// ModelAndView mv = new ModelAndView("boardWrite");
+
+		// return mv;
+
 	}
 
-	@RequestMapping(value = "/insertBoard")
+	/**
+	 * 실제로 글쓴 내용을 디비에 저장
+	 * 
+	 * @param commandMap
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/insertBoard", method = RequestMethod.POST)
 	public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:openBoardList");
 
 		service.insertBoard(commandMap.getMap(), request);
 
 		return mv;
+	}
+
+	@RequestMapping(value = "/insertBoard")
+	public String insertBoardNotPost(CommandMap commandMap, HttpServletRequest request,RedirectAttributes redirect) throws Exception {
+//		request.setAttribute("msg", "잘못된 요청 방법 입니다.");//리다이랙트로는 안넘어감
+		redirect.addFlashAttribute("msg", "잘못된 요청 방법 입니다.");
+//		redirect.addFlashAttribute("param1", "나의파람");
+//		redirect.addFlashAttribute("param2", "나의파람2");
+		return "redirect:openBoardList";
 	}
 
 	@RequestMapping(value = "/openBoardDetail")

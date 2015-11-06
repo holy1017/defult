@@ -21,13 +21,20 @@
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
-	<!-- 로거 출력용 -->
 	<mvc:interceptors>
+		<!-- 로거 출력용 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<beans:bean
 				id="loggerInterceptor"
 				class="common.logger.LoggerInterceptor"></beans:bean>
+		</mvc:interceptor>
+		<!-- SCRFI 체크용 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/insertBoard" />
+			<beans:bean
+				id="sCRFInterceptor"
+				class="common.security.SCRFInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 
@@ -49,7 +56,7 @@
 			name="suffix"
 			value=".jsp" />
 	</beans:bean>
-	
+
 	<!-- MultipartResolver 설정 -->
 	<beans:bean
 		id="multipartResolver"
@@ -61,7 +68,7 @@
 			name="maxInMemorySize"
 			value="100000000" />
 	</beans:bean>
-	
+
 	<context:component-scan base-package="first" />
 	<context:component-scan base-package="common" />
 

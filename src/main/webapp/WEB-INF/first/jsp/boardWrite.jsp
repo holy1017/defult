@@ -7,6 +7,7 @@
 </head>
 <body>
 	<form id="frm" name="frm" enctype="multipart/form-data">
+	<input type="hidden" name="csrf" value="${CSRF_TOKEN}"/>
 		<table class="board_view">
 			<colgroup>
 				<col width="15%">
@@ -55,5 +56,7 @@
 			comSubmit.submit();
 		}
 	</script>
+	
+	<%@ include file="/debug/debug.jsp" %>
 </body>
 </html>
