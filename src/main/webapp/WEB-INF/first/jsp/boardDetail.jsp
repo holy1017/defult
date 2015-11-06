@@ -8,10 +8,10 @@
 <body>
 	<table class="board_view">
 		<colgroup>
-			<col width="15%" />
-			<col width="35%" />
-			<col width="15%" />
-			<col width="35%" />
+			<col width="15%"/>
+			<col width="35%"/>
+			<col width="15%"/>
+			<col width="35%"/>
 		</colgroup>
 		<caption>게시글 상세</caption>
 		<tbody>
@@ -34,17 +34,18 @@
 			<tr>
 				<td colspan="4">${map.CONTENTS }</td>
 			</tr>
-			<c:if test="${list!=null }">
 			<tr>
 				<th scope="row">첨부파일</th>
-				<td colspan="3"><c:forEach var="row" items="${list }">
-						<input type="hidden" id="IDX" value="${row.IDX }">
-						<a href="#this" name="file">${row.ORIGINAL_FILE_NAME }</a> 
-                        (${row.FILE_SIZE }kb)
-                    </c:forEach></td>
+				<td colspan="3">				
+					<c:forEach var="row" items="${list }">
+						<p>
+							<input type="hidden" id="IDX" value="${row.IDX }">
+							<a href="#this" name="file">${row.ORIGINAL_FILE_NAME }</a> 
+							(${row.FILE_SIZE }kb)
+						</p>
+					</c:forEach>
+				</td>
 			</tr>
-			</c:if>
-			
 		</tbody>
 	</table>
 	<br />
@@ -84,10 +85,11 @@
 			comSubmit.addParam("IDX", idx);
 			comSubmit.submit();
 		}
-		function fn_downloadFile(obj) {
+		function fn_downloadFile(obj){
 			var idx = obj.parent().find("#IDX").val();
 			var comSubmit = new ComSubmit();
 			comSubmit.setUrl("<c:url value='common/downloadFile' />");
+			comSubmit.reset()
 			comSubmit.addParam("IDX", idx);
 			comSubmit.submit();
 		}
