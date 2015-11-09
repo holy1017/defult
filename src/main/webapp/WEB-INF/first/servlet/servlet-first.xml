@@ -17,7 +17,7 @@
 
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
-			<beans:bean class="first.CustomMapArgumentResolver"></beans:bean>
+			<beans:bean class="common.logger.CustomMapArgumentResolver"></beans:bean>
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
