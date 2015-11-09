@@ -35,7 +35,7 @@ sql 쪽은 인터페이스로해둘걸.
 
 파일 업로드 브런치 생성
 
-##  === 문법 테스트 ===
+## === 문법 테스트 ===
 
 # The largest heading (an <h1>ㅅㄷㄴㅅ</h1> tag)
 ## The second largest heading (an <h2> tag)
