@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * AES 암호/복호화 예제
+ * AES 대칭키 암호/복호화 예제
  * 
  * @author Administrator
  *         http://aesencryption.net/#Java-aes-encryption-example

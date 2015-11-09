@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import common.utill.UtillsTimeChack;
+
 /**
  * SHA 암호화 정리
- * 
+ * b는 바이트 배열
+ * s는 바이트 배열을 문자로 변환
+ * 표시가 없는건 바이트 배열을 16비트값으로 표현
  * @author Administrator
  */
 @Controller
@@ -49,6 +53,10 @@ public class SecuritySHA {
 		sha = SHA512("SecuritySample").length() + ":" + SHA512("SecuritySample");
 		log.debug(sha);
 		model.addAttribute("sha512", sha);
+		
+		sha = SHA512t("SecuritySample").length() + ":" + SHA512t("SecuritySample");
+		log.debug(sha);
+		model.addAttribute("sha512t", sha);
 
 		sha = SHA256s("SecuritySample").length() + ":" + SHA256s("SecuritySample");
 		log.debug(sha);
@@ -58,11 +66,11 @@ public class SecuritySHA {
 		log.debug(sha);
 		model.addAttribute("sha512s", sha);
 
-		sha = SHA256b("SecuritySample").length + ":" + SHA256b("SecuritySample");
+		sha = SHA256b("SecuritySample").length + ":" + SHA256b("SecuritySample").toString();
 		log.debug(sha);
 		model.addAttribute("sha256b", sha);
 
-		sha = SHA512b("SecuritySample").length + ":" + SHA512b("SecuritySample");
+		sha = SHA512b("SecuritySample").length + ":" + SHA512b("SecuritySample").toString();
 		log.debug(sha);
 		model.addAttribute("sha512b", sha);
 
@@ -91,7 +99,7 @@ public class SecuritySHA {
 	}) // ,method = RequestMethod.POST
 	@ResponseBody
 	public final static String SHA256(@PathVariable String str) {
-		log.info("SHA256");
+		//log.debug("SHA256");
 		String SHA = "";
 		try {
 			MessageDigest sh = MessageDigest.getInstance("SHA-256");
@@ -126,7 +134,7 @@ public class SecuritySHA {
 	}) // ,method = RequestMethod.POST
 	@ResponseBody
 	public final static String SHA256s(@PathVariable String str) {
-		log.info("SHA256s");
+		log.debug("SHA256s");
 		String SHA = "";
 		try {
 			MessageDigest sh = MessageDigest.getInstance("SHA-256");
@@ -154,7 +162,7 @@ public class SecuritySHA {
 	}) // ,method = RequestMethod.POST
 	@ResponseBody
 	public final static byte[] SHA256b(@PathVariable String str) {
-		log.info("SHA256b");
+		log.debug("SHA256b");
 		// String SHA = "";
 		try {
 			MessageDigest sh = MessageDigest.getInstance("SHA-256");
@@ -182,7 +190,7 @@ public class SecuritySHA {
 	}) // ,method = RequestMethod.POST
 	@ResponseBody
 	public final static String SHA512(@PathVariable String target) {
-		log.info("SHA512");
+		//log.debug("SHA512");
 		try {
 			MessageDigest sh = MessageDigest.getInstance("SHA-512");
 			sh.update(target.getBytes());
@@ -190,6 +198,33 @@ public class SecuritySHA {
 			for (byte b : sh.digest()) {
 				// sb.append(Integer.toHexString(0xff & b));
 				sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+			}
+			// log.debug(sb.length() + ":" + sb.toString());
+			return sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * 이방법 쓰지 말기 format 함수가 두배나 느림
+	 * @param target
+	 * @return
+	 */
+	@RequestMapping(value = {
+			"/SHA512t/{target}"
+	}) // ,method = RequestMethod.POST
+	@ResponseBody
+	public final static String SHA512t(@PathVariable String target) {
+		//log.debug("SHA512t");
+		try {
+			MessageDigest sh = MessageDigest.getInstance("SHA-512");
+			sh.update(target.getBytes());
+			
+			StringBuffer sb = new StringBuffer();
+			for (byte b : sh.digest()) {
+				// sb.append(Integer.toHexString(0xff & b));
+				sb.append(String.format("%02x", b&0xff));//이방법 느림 쓰지 말기 아래와 비교해서 두배나 느림
+				//sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
 			}
 			// log.debug(sb.length() + ":" + sb.toString());
 			return sb.toString();
@@ -209,7 +244,7 @@ public class SecuritySHA {
 	}) // ,method = RequestMethod.POST
 	@ResponseBody
 	public final static String SHA512s(@PathVariable String target) {
-		log.info("SHA512s");
+		log.debug("SHA512s");
 		try {
 			MessageDigest sh = MessageDigest.getInstance("SHA-512");
 			sh.update(target.getBytes());
@@ -242,7 +277,7 @@ public class SecuritySHA {
 	}) // ,method = RequestMethod.POST
 	@ResponseBody
 	public final static byte[] SHA512b(@PathVariable String target) {
-		log.info("SHA512b");
+		log.debug("SHA512b");
 		try {
 			MessageDigest sh = MessageDigest.getInstance("SHA-512");
 			sh.update(target.getBytes());
@@ -265,11 +300,29 @@ public class SecuritySHA {
 	}
 
 	public static void main(String[] args) {
-		byte[] b = SHA512b("NoSuchAlgorithmException");
-		System.out.println(b.length + ":" + new String(b));
-		// for (int i = 0; i < 20; i++) {
-		// System.out.println(Integer.toHexString(i));
-		// System.out.println(Integer.toHexString(0xff &i));
-		// }
+		
+		UtillsTimeChack t1=new UtillsTimeChack();
+		UtillsTimeChack t2=new UtillsTimeChack();
+		
+		t1.setStart();
+		log.debug(t1.getStart());
+		for (int i = 0; i < 10000; i++) {
+			SHA512("SecuritySample");
+		}
+		t1.setEnd();
+		log.debug(t1.getEnd());
+		
+		t2.setStart();
+		log.debug(t1.getStart());
+		for (int i = 0; i < 10000; i++) {
+			SHA512t("SecuritySample");
+		}
+		t2.setEnd();
+		log.debug(t1.getEnd());
+		
+		log.debug(t1.getTime());
+		log.debug(t2.getTime());
+
+
 	}
 }
