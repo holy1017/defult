@@ -24,6 +24,12 @@
   * /WEB-INF/board/servlet/servlet-board.xml
     * /WEB-INF/board/jsp/
     * component-scan base-package="board"
+    
+## === 메모 ===
+
+sql 쪽은 인터페이스로해둘걸.
+근데 해뒀어도 의미 없었을거같긴하네;
+지금 게시판만 하고 있으니 뭐
 
 ## === 151105 ===
 
