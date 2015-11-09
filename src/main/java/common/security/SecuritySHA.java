@@ -1,17 +1,11 @@
 package common.security;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -21,17 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
+ * SHA 암호화 정리
+ * 
  * @author Administrator
- *         암호화 정리
  */
 @Controller
 
 @RequestMapping(value = {
-		"/Security/*"
+		"/SecuritySHA/*"
 }) // ,method = RequestMethod.POST
-public class Security {
+public class SecuritySHA {
 
-	protected static Log log = LogFactory.getLog(Security.class);
+	protected static Log log = LogFactory.getLog(SecuritySHA.class);
 
 	/**
 	 * 단일 암호화 샘플
@@ -277,135 +272,4 @@ public class Security {
 		// System.out.println(Integer.toHexString(0xff &i));
 		// }
 	}
-}
-
-/**
- * AES 암호/복호화 예제
- * 
- * @author Administrator
- *         http://aesencryption.net/#Java-aes-encryption-example
- */
-class AES {
-	
-	protected static Log log = LogFactory.getLog(Security.class);
-
-	private static SecretKeySpec secretKey;
-	private static byte[] key;
-
-	private static String decryptedString;
-	private static String encryptedString;
-
-	public static void setKey(String myKey) {
-
-		MessageDigest sha = null;
-		try {
-			key = myKey.getBytes("UTF-8");
-			System.out.println("key.length:" + key.length);
-			sha = MessageDigest.getInstance("SHA-1");
-			key = sha.digest(key);
-			key = Arrays.copyOf(key, 16); // use only first 128 bit// 지우면 인코딩 안됨
-			System.out.println("key.length:" + key.length);
-			System.out.println("key:" + new String(key, "UTF-8"));
-			secretKey = new SecretKeySpec(key, "AES");
-
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public static String getDecryptedString() {
-		return decryptedString;
-	}
-
-	public static void setDecryptedString(String decryptedString) {
-		AES.decryptedString = decryptedString;
-	}
-
-	public static String getEncryptedString() {
-		return encryptedString;
-	}
-
-	public static void setEncryptedString(String encryptedString) {
-		AES.encryptedString = encryptedString;
-	}
-
-	/**
-	 * 암호화
-	 * 
-	 * @param strToEncrypt
-	 * @return
-	 */
-	public static String encrypt(String strToEncrypt) {
-		try {
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-
-			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-
-			setEncryptedString(Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes("UTF-8"))));
-
-		} catch (Exception e) {
-
-			//e.printStackTrace();
-			log.info("암호화 오류 : " + e.toString());
-			setEncryptedString(null);
-		}
-		return null;
-	}
-
-	/**
-	 * 복호화
-	 * 
-	 * @param strToDecrypt
-	 * @return
-	 */
-	public static String decrypt(String strToDecrypt) {
-		try {
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-
-			cipher.init(Cipher.DECRYPT_MODE, secretKey);
-			setDecryptedString(new String(cipher.doFinal(Base64.decodeBase64(strToDecrypt))));
-
-		} catch (Exception e) {
-
-			//e.printStackTrace();
-			log.info("복호화  오류: " + e.toString());
-			setDecryptedString(null);
-		}
-		return null;
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String args[]) {
-		
-		final String strToEncrypt = "내용";
-		final String strPssword = "암호";
-
-		AES.setKey(strPssword);//암호키
-
-		AES.encrypt(strToEncrypt.trim());//암호화할 내용
-
-		System.out.println("암호화할 내용: " + strToEncrypt);
-		System.out.println("암호화된 내용: " + AES.getEncryptedString());
-
-		final String strToDecrypt = AES.getEncryptedString();//암호화된 내용 저장
-		AES.decrypt(strToDecrypt.trim());//복호화 처리
-
-		System.out.println("복호화할 내용 : " + strToDecrypt);
-		System.out.println("복호화된 내용 : " + AES.getDecryptedString());
-		
-		AES.setKey(strPssword+"ㅁ");//틀린 암호키일 경우
-		AES.decrypt(strToDecrypt.trim());//복호화 처리
-		
-		System.out.println("복호화할 내용 : " + strToDecrypt);
-		System.out.println("복호화된 내용  : " + AES.getDecryptedString());
-
-	}
-
 }
