@@ -31,33 +31,24 @@ public class FirstService {
 		return dao.selectBoardList(map);
 	}
 
-	public void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
+	public List<Map<String, Object>> insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		dao.insertBoard(map);
 
 		// 파일 들어온거 확인용
-		fileChack(request);
+		fileUtils.fileChack(request);
 
-		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(map, request);
+		//파일 저장 처리
+		Map<String, List<Map<String, Object>>> listReturn = fileUtils.parseInsertFileInfo(map, request,1024*50);
+		List<Map<String, Object>> list=listReturn.get("list");
+		//파일저장된 정보를 db로 저장
 		for (int i = 0, size = list.size(); i < size; i++) {
 			dao.insertFile(list.get(i));
 		}
+		//실패한 리스트 반환
+		return listReturn.get("listFail");
 	}
 
-	private void fileChack(HttpServletRequest request) {
-		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		MultipartFile multipartFile = null;
-		while (iterator.hasNext()) {
-			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-			if (multipartFile.isEmpty() == false) {
-				log.debug("------------- file start -------------");
-				log.debug("name : " + multipartFile.getName());
-				log.debug("filename : " + multipartFile.getOriginalFilename());
-				log.debug("size : " + multipartFile.getSize());
-				log.debug("-------------- file end --------------\n");
-			}
-		}
-	}
+
 
 	public Map<String, Object> selectBoardDetail(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub

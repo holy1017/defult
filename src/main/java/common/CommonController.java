@@ -20,13 +20,16 @@ public class CommonController {
 	@Resource(name = "commonService")
 	private CommonService commonService;
 
+	@Resource(name = "fileUtils")
+	private UtilsFile fileUtils;
+	
 	@RequestMapping(value = "downloadFile")
 	public void downloadFile(CommandMap commandMap, HttpServletResponse response) throws Exception {
 		Map<String, Object> map = commonService.selectFileInfo(commandMap.getMap());
 		String storedFileName = (String) map.get("STORED_FILE_NAME");
 		String originalFileName = (String) map.get("ORIGINAL_FILE_NAME");
 
-		UtilsFile.readFile(response, storedFileName, originalFileName);
+		fileUtils.readFile(response, storedFileName, originalFileName);
 	}
 
 	

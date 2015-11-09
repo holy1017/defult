@@ -34,17 +34,16 @@
 			<tr>
 				<td colspan="4">${map.CONTENTS }</td>
 			</tr>
-			<c:if test="${list!=null }">
 			<tr>
 				<th scope="row">첨부파일</th>
 				<td colspan="3"><c:forEach var="row" items="${list }">
-						<input type="hidden" id="IDX" value="${row.IDX }">
-						<a href="#this" name="file">${row.ORIGINAL_FILE_NAME }</a> 
-                        (${row.FILE_SIZE }kb)
-                    </c:forEach></td>
+						<p>
+							<input type="hidden" id="IDX" value="${row.IDX }"> <a
+								href="#this" name="file">${row.ORIGINAL_FILE_NAME }</a>
+							(${row.FILE_SIZE }kb)
+						</p>
+					</c:forEach></td>
 			</tr>
-			</c:if>
-			
 		</tbody>
 	</table>
 	<br />
@@ -90,6 +89,22 @@
 			comSubmit.setUrl("<c:url value='common/downloadFile' />");
 			comSubmit.addParam("IDX", idx);
 			comSubmit.submit();
+			comSubmit.reset()
+		}
+		function fn_addFile() {
+			var str = "<p>" + "<input type='file' id='file_" + (gfv_count)
+					+ "' name='file_" + (gfv_count) + "'>"
+					+ "<a href='#this' class='btn' id='delete_" + (gfv_count)
+					+ "' name='delete_" + (gfv_count) + "'>삭제</a>" + "</p>";
+			$("#fileDiv").append(str);
+			$("#delete_" + (gfv_count++)).on("click", function(e) { //삭제 버튼
+				e.preventDefault();
+				fn_deleteFile($(this));
+			});
+		}
+
+		function fn_deleteFile(obj) {
+			obj.parent().remove();
 		}
 	</script>
 	<%@ include file="/debug/debug.jsp"%>
