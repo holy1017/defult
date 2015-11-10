@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml  version="1.0" encoding="UTF-8"?>
 <web-app
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee"
@@ -105,7 +105,7 @@
 		<url-pattern>/board2/*</url-pattern>
 	</servlet-mapping>
 
-
+	<!-- 게시판용 -->
 	<servlet>
 		<servlet-name>board</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -136,6 +136,7 @@
 		<url-pattern>/scott/*</url-pattern>
 	</servlet-mapping>
 
+	<!-- 다음 에디터 레이아웃 테스트용. 실제 파일 업로드는 아직 못해봄 -->
 	<servlet>
 		<servlet-name>daumeditor</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -151,6 +152,7 @@
 		<url-pattern>/daumeditor/*</url-pattern>
 	</servlet-mapping>
 
+	<!-- 마이플랫포 따라하기용. -->
 	<servlet>
 		<servlet-name>miplatform</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -165,8 +167,8 @@
 		<servlet-name>miplatform</servlet-name>
 		<url-pattern>/miplatform/*</url-pattern>
 	</servlet-mapping>
-	
-	
+
+	<!-- http://addio3305.tistory.com/category/Spring 따라하기용 -->
 	<servlet>
 		<servlet-name>first</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -181,7 +183,8 @@
 		<servlet-name>first</servlet-name>
 		<url-pattern>/first/*</url-pattern>
 	</servlet-mapping>
-	
+
+	<!-- 연습하다가 중단 -->
 	<servlet>
 		<servlet-name>Member</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

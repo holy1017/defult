@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+
 /**
  * @author Administrator
  *         파일 저장및 읽기 구현
@@ -33,7 +34,7 @@ public class UtilsFile {
 	private String filePath = "d:\\file\\";
 
 	/**
-	 * 파일 업로드 기능
+	 * 파일 업로드 기능,크기 제한 없음, 다중 파일 처리
 	 * 
 	 * @param map
 	 * @param request
@@ -46,7 +47,7 @@ public class UtilsFile {
 	}
 
 	/**
-	 * 파일 업로드 기능
+	 * 파일 업로드 기능, 업로드 크기 제한 가능, 다중 파일 처리
 	 * 
 	 * @param map
 	 * @param request
@@ -88,6 +89,7 @@ public class UtilsFile {
 				log.debug("FILE_SIZE:"+multipartFile.getSize());
 				originalFileName = multipartFile.getOriginalFilename();
 				
+				// 파일 크기 확이
 				if (fileMaxSize == 0 || multipartFile.getSize() < fileMaxSize) {
 
 					originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
@@ -142,6 +144,10 @@ public class UtilsFile {
 		response.getOutputStream().close();
 	}
 
+	/**
+	 * 현재 업로드된 파일 내용 확인
+	 * @param request
+	 */
 	public void fileChack(HttpServletRequest request) {
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
@@ -156,5 +162,33 @@ public class UtilsFile {
 				log.debug("-------------- file end --------------");
 			}
 		}
+	}
+	
+	/**
+	 * 단일 파일 업로드 예제
+	 * @param file
+	 * @param request
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	public String fileUpload(MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException {
+		
+		String real_name = null;
+		String org_name = file.getOriginalFilename();
+		 
+		if (org_name != null && (!org_name.equals(""))) {
+			real_name = "board_" + System.currentTimeMillis() + "_" + org_name;
+			//String docRoot = request.getSession().getServletContext().getRealPath("/uploadStorage");
+			String docRoot="d:/file";
+			File fileDir = new File(docRoot);
+			if (!fileDir.exists()) {
+				fileDir.mkdir();
+			}
+			File fileAdd = new File(docRoot + "/" + real_name);
+			log.info("---------------------***docRoot : "+docRoot);
+			file.transferTo(fileAdd);
+		}
+		return real_name;
 	}
 }
