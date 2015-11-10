@@ -1,0 +1,8 @@
+apply plugin: 'application'
+mainClassName = 'demo.Application'
+repositories {
+	mavenCentral()
+}
+dependencies {
+	compile("org.springframework:spring-context:4.1.2.RELEASE")
+}
