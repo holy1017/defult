@@ -2,15 +2,18 @@
 <project
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+	http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>common.ctr</groupId>
 	<artifactId>spring</artifactId>
 	<name>spring</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
+	<url>http://maven.apache.org</url>
 	<properties>
 		<java-version>1.6</java-version>
+		<spring.version>4.0.1.RELEASE</spring.version>
 		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<!-- <org.aspectj-version>1.7.3</org.aspectj-version> -->
@@ -40,7 +43,7 @@
 
 	<dependencies>
 
-<!-- aop 사용시 스프링 3.1 이하는 이게 필요 -->
+		<!-- aop 사용시 스프링 3.1 이하는 이게 필요 -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
@@ -134,8 +137,19 @@
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${org.springframework-version}</version>
+			<!-- <version>${org.springframework-version}</version> -->
+			<version>${spring.version}</version>
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
 				<exclusion>
@@ -147,7 +161,8 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${org.springframework-version}</version>
+			<!-- <version>${org.springframework-version}</version> -->
+			<version>${spring.version}</version>
 		</dependency>
 
 		<!-- AspectJ -->
@@ -242,7 +257,8 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.7</version>
+			<!-- <version>4.7</version> -->
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
