@@ -40,8 +40,8 @@ project.ext {
 }
 apply plugin: 'aspectj'
  
-sourceCompatibility = 1.8   // 자바 버전입니다.
-targetCompatibility = 1.8
+sourceCompatibility = 1.7   // 자바 버전입니다.
+targetCompatibility = 1.7
  
 version = '1.0'
  
