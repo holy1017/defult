@@ -1,134 +1,73 @@
-buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.3'
-    }
-}
-
 apply plugin: 'java'
-apply plugin: 'eclipse-wtp' // 이클립스에서 구동하고 배포하기위해 플러그인 설치합니다.
 apply plugin: 'war'
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'nexus'
-apply plugin: 'idea'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'jetty'
 
-// aspectj 설치
-
-buildscript {
-    repositories {
-        maven {
-            url "https://maven.eveoh.nl/content/repositories/releases"
-        }
-    }
-
-    dependencies {
-        classpath "nl.eveoh:gradle-aspectj:1.6"
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
-project.ext {
-    aspectjVersion = '1.8.4'
-}
-apply plugin: 'aspectj'
- 
-sourceCompatibility = 1.7   // 자바 버전입니다.
+// JDK 7
+sourceCompatibility = 1.7
 targetCompatibility = 1.7
- 
-version = '1.0'
- 
-// 귀찮은 버전관리를 편하게 하기 위해서
-def version = [
-spring: '4.1.6.RELEASE',
-servletAPI: '3.1.0',
-commonsCollections: '3.2.1',
-junit: '4.12',
-slf4j: '1.7.12',
-mybatis:'3.2.2',
-aspectj:'1.6.10'
-]
- 
-eclipse {
-    // 빌드하고나면 프로젝트정보도 같이 지워지는데, Gradle프로젝트임을 인식시켜줍니다.
-    project.natures "org.springsource.ide.eclipse.gradle.core.nature"
-    wtp {
-        facet {
-            facet name: 'jst.web', version: '3.1'
-            facet name: 'jst.java', version: '1.8'
-        }
-    }
-}
- 
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'Gradle Quickstart',
-                   'Implementation-Version': version
-    }
-}
- 
+
 repositories {
+    mavenLocal()
     mavenCentral()
 }
- 
-dependencies {
-	repositories {
-        jcenter()
-        mavenCentral()
-    }
-    // ${version.~}변수는 위에서 정의한 버전으로 사용됩니다.
-    providedCompile "javax.servlet:javax.servlet-api:${version.servletAPI}"
-     
-    compile "org.springframework:spring-webmvc:${version.spring}"
-     
-    compile "org.slf4j:slf4j-api:${version.slf4j}"
-    compile     group: 'commons-collections',     name: 'commons-collections',     version: "${version.commonsCollections}"
-    testCompile     group: 'junit',     name: 'junit',     version: "${version.junit}"
-    
 
-    compile 'org.springframework.boot:spring-boot-starter-jdbc:1.2.2.RELEASE'
-    compile 'org.springframework:spring-context:4.1.6.RELEASE'
-    compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
-    compile 'javax.servlet:servlet-api:2.5'
-    compile 'javax.servlet.jsp:jsp-api:2.1'
-    compile 'javax.servlet:jstl:1.2'
-    compile 'org.mybatis:mybatis-spring:1.2.2'
-    compile 'org.mybatis:mybatis:3.2.8'
-    compile 'org.aspectj:aspectjrt:${version.aspectj}'
-    compile 'org.apache.commons:commons-lang3:3.+'
-    compile 'mysql:mysql-connector-java:5.1.34'
-    compile 'commons-dbcp:commons-dbcp:1.4'
-    compile 'commons-io:commons-io:1.+'
-    compile 'com.navercorp.lucy:lucy-xss:1.+'
-    compile 'ch.qos.logback:logback-classic:1.1.3'
-    compile 'org.lazyluke:log4jdbc-remix:0.2.7'
-}
+dependencies {
  
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8' // 인코딩 UTF-8로 통일합니다.
- 
-test {
-    systemProperties 'property': 'value'
+	compile 'ch.qos.logback:logback-classic:1.1.3'
+	
+	compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
+	compile 'org.springframework:spring-core:4.2.2.RELEASE'
+	compile 'org.springframework:spring-context:4.2.2.RELEASE'
+	compile 'org.springframework:spring-web:4.2.2.RELEASE'
+	compile 'org.springframework:spring-jdbc:4.2.2.RELEASE'
+	compile 'org.springframework:spring-webmvc:4.2.2.RELEASE'
+	compile 'org.springframework:spring-beans:4.2.2.RELEASE'
+	compile 'org.springframework:spring-aop:4.2.2.RELEASE'
+
+	compile 'javax.servlet:jstl:1.2'
+	compile 'javax.servlet:javax.servlet-api:3.0.1'
+	
+	compile 'org.mybatis:mybatis:3.3.0'
+	compile 'org.mybatis:mybatis-spring:1.2.3'
+	
+	compile 'org.aspectj:aspectjrt:1.8.7'
+	
+	compile 'commons-codec:commons-codec:1.10'
+	compile 'commons-io:commons-io:2.4'
+	compile 'commons-fileupload:commons-fileupload:1.3.1'
+	compile 'commons-dbcp:commons-dbcp:1.4'
+	
+	compile 'log4j:log4j:1.2.17'
+	compile 'org.lazyluke:log4jdbc-remix:0.2.7'
+
+	compile 'com.navercorp.lucy:lucy-xss:1.6.3'
+	
+
 }
- 
-uploadArchives {
-    repositories {
-       flatDir {
-           dirs 'repos'
-       }
-    }
-    repositories.mavenDeployer {
-        pom.artifactId = 'gradle-android-aspectj-plugin'
-    }
+
+// Embeded Jetty for testing
+jettyRun{
+	contextPath = "spring4"
+	httpPort = 8080
 }
-install {
-    repositories.mavenInstaller {
-        pom.artifactId = 'gradle-android-aspectj-plugin'
-    }
+
+jettyRunWar{
+	contextPath = "spring4"
+	httpPort = 8080
 }
+
+//For Eclipse IDE only
+eclipse {
+
+  wtp {
+    component {
+      
+      //define context path, default to project folder name
+      contextPath = 'spring4'
+      
+    }
+    
+  }
+}
+
